@@ -20,6 +20,13 @@ Fraction Fraction::Difference(Fraction b) {
 
 Fraction Fraction::Multiplication(Fraction b) {
 	Fraction c;
+	c.numerator = (numerator * b.numerator);
+	c.denominator = (b.denominator * denominator);
+	return c;
+}
+
+Fraction Fraction::Division(Fraction b) {
+	Fraction c;
 	c.numerator = (numerator * b.denominator);
 	c.denominator = (b.numerator * denominator);
 	return c;

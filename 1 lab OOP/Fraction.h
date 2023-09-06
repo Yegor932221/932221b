@@ -7,6 +7,7 @@ public:
 	Fraction Sum(Fraction b);
 	Fraction Difference(Fraction b);
 	Fraction Multiplication(Fraction b);
+	Fraction Division(Fraction b);
 	int numerator;
 	int denominator;
 };
