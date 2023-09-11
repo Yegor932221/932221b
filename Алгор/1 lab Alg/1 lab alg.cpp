@@ -19,8 +19,8 @@ int main() {
 	rearrangement = new int[numberCities + 1];
 	cheapest = new int[numberCities + 1];
 
-	rearrangement[0] = start;
-	rearrangement[numberCities] = start;
+	/*rearrangement[0] = start;
+	rearrangement[numberCities] = start;*/
 
 	std::cout << "Enter matr:" << std::endl;
 	InputMatrD(matr, numberCities, numberCities);
@@ -28,21 +28,22 @@ int main() {
 	std::cout << "Output matr:" << std::endl;
 	OutputMatrD(matr, numberCities, numberCities);
 
-	for (i = 1, j = 1; i < numberCities; i++) {
-		if (j == start) j++;
+	for (i = 0/*, j = 1*/; i <= numberCities; i++) {
+		rearrangement[i] = start;
+		/*if (j == start) j++;
 		rearrangement[i] = j;
 		cheapest[i] = rearrangement[i];
-		j++;
+		j++;*/
 	}
 
 	std::cout << std::endl;
-	for (i = 0; i < numberCities; i++) {
+	/*for (i = 0; i < numberCities; i++) {
 		k = rearrangement[i] - 1;
 		l = rearrangement[i + 1] - 1;
 		lowerCost += matr[k][l];
-	}
+	}*/
 
-	for (i = 1; i < numberCities; i++)full *= i; 
+	/*for (i = 1; i < numberCities; i++)full =full* i; 
 
 		for (k = 1; k <= full; k++) {
 			for (i = 1; i < (numberCities - 1); i++)
@@ -69,12 +70,27 @@ int main() {
 				}
 			}
 		}
-	
+	*/
+
+	for (i = 0, k = 0; i < numberCities - 1; i++) {
+		for (j = 0; j < numberCities; j++) if (i+1 == rearrangement[j]|| i==rearrangement[j]) {
+			i++;
+			j = 0;
+		}
+		if (i == rearrangement[k]) i++;
+		if (matr[rearrangement[k]][i] > matr[rearrangement[k]][i + 1] && (i + 1) != rearrangement[k]) rearrangement[++k] = i + 1;
+		else rearrangement[++k] = i;
+	}
+	for (i = 0; i < numberCities; i++) {
+		k = rearrangement[i] - 1;
+		l = rearrangement[i + 1] - 1;
+		lowerCost += matr[k][l];
+	}
 
 
 	std::cout << std::endl;
-
-	for (i = 0; i < numberCities + 1; i++) std::cout << cheapest[i]<< " ";
+	for (i = 0; i < numberCities + 1; i++) std::cout << rearrangement[i]<< " ";
+	/*for (i = 0; i < numberCities + 1; i++) std::cout << cheapest[i]<< " ";*/
 	std::cout<<std::endl<<"lowerCost: " << lowerCost;
 	std::cout <<std::endl<< "Enter number of Cities: " <<numberCities << std::endl;
 	std::cout << "Cite start: " <<start << std::endl;
