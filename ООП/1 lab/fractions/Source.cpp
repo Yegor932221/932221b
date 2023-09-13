@@ -5,6 +5,7 @@
 int main() 
 {
 	Fraction f, g;
+	f.Print();
 	Fraction h;
 	f.numerator = 1;
 	f.denominator = 2;

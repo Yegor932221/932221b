@@ -31,3 +31,13 @@ Fraction Fraction::Division(Fraction b) {
 	c.denominator = (b.numerator * denominator);
 	return c;
 }
+
+Fraction::Fraction() {
+	numerator = 1;
+	denominator = 1;
+}
+
+Fraction::Fraction(int numerator, int denominator) {
+	this->numerator = numerator;
+	this->denominator = denominator;
+}
