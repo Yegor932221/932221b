@@ -1,13 +1,16 @@
 #include<iostream>
+#include <time.h>
 void InputMatrD(int** matr, int m, int n);
 void OutputMatrD(int** matr, int m, int n);
 void Swap(int* a, int b, int c);
+int CostWay(int** matr, int* rearrangement, int numberCities);
+void RandomMatr(int** matr, int n);
 
-int main() {
-	int start, numberCities, i, j, l, m, k, cost = 0, lowerCost = 0, full=1;
+int main() {	
+	int start, numberCities, i, j, maxJ, maxI, k, cost = 0, lowerCost = 0, full=1;
 	int* rearrangement, * cheapest;
 	int** matr;
-	std::cout << "Enter number of Cities:" << std::endl;
+	std::cout << "Enter number of Citiesgg:" << std::endl;
 	std::cin >> numberCities;
 	std::cout << "Cite start" << std::endl;
 	std::cin >> start;
@@ -19,78 +22,68 @@ int main() {
 	rearrangement = new int[numberCities + 1];
 	cheapest = new int[numberCities + 1];
 
-	/*rearrangement[0] = start;
-	rearrangement[numberCities] = start;*/
-
-	std::cout << "Enter matr:" << std::endl;
-	InputMatrD(matr, numberCities, numberCities);
-
+	RandomMatr(matr, numberCities);
 	std::cout << "Output matr:" << std::endl;
 	OutputMatrD(matr, numberCities, numberCities);
 
-	for (i = 0/*, j = 1*/; i <= numberCities; i++) {
-		rearrangement[i] = start;
-		/*if (j == start) j++;
+	rearrangement[0] = start;
+	rearrangement[numberCities] = start;
+
+	for (i = 1, j = 1; i < numberCities; i++) {
+		if (j == start) j++;
 		rearrangement[i] = j;
 		cheapest[i] = rearrangement[i];
-		j++;*/
+		j++;
 	}
 
+	std::cout << std::endl<<"0. ";
+	for (i = 0; i < numberCities + 1; i++) std::cout << rearrangement[i] << " ";
 	std::cout << std::endl;
-	/*for (i = 0; i < numberCities; i++) {
-		k = rearrangement[i] - 1;
-		l = rearrangement[i + 1] - 1;
-		lowerCost += matr[k][l];
-	}*/
+	lowerCost = CostWay(matr, rearrangement, numberCities);
 
-	/*for (i = 1; i < numberCities; i++)full =full* i; 
+	for (i = 1; i < numberCities; i++)full = full * i; 
 
-		for (k = 1; k <= full; k++) {
-			for (i = 1; i < (numberCities - 1); i++)
-				if (rearrangement[i] < rearrangement[i + 1])m = i;
+		for (k = 1; k < full; k++) {
+			maxI = -1; maxJ=-1;
 
-			for (j = m + 1; rearrangement[m] < rearrangement[j] && j < numberCities; j++);
-
-			Swap(rearrangement, i, j);
-
-			for (m += 1; m < numberCities - 1; m++) if (rearrangement[m] > rearrangement[m + 1]) {
-				Swap(rearrangement, m, m + 1);
-				m--;
+			for (i = 1; i < (numberCities - 1); i++) {
+				if (rearrangement[i] < rearrangement[(i + 1)]) maxI = i;
 			}
 
-			for (m = 0, cost = 0; m < numberCities; m++) {
-				k = rearrangement[m] - 1;
-				l = rearrangement[m + 1] - 1;
-				cost =cost+ matr[k][l];
+			if (maxI==-1) break;
+
+			for (j =(maxI+1); j <= numberCities - 1; j++) { if (rearrangement[maxI] < rearrangement[j]) maxJ = j; }
+
+			if ( maxJ==-1) break;
+
+			Swap(rearrangement, maxI, maxJ);
+			
+			j = numberCities - 1;
+			i = maxI + 1;
+
+			while (i < j) {
+				Swap(rearrangement, i, j);
+				i++; j--;
+			}
+			
+			std::cout << k << ". ";
+			for (i = 0; i < numberCities + 1; i++) std::cout << rearrangement[i] << " ";
+			std::cout << std::endl;
+			cost = CostWay(matr, rearrangement, numberCities);
 
 				if (cost < lowerCost) {
 					lowerCost = cost;
-					for (m = 1; m < numberCities; m++)
-						cheapest[m] = rearrangement[m];
+					for (j = 1; j < numberCities; j++)
+						cheapest[j] = rearrangement[j];
 				}
 			}
-		}
-	*/
-
-	for (i = 0, k = 0; i < numberCities - 1; i++) {
-		for (j = 0; j < numberCities; j++) if (i+1 == rearrangement[j]|| i==rearrangement[j]) {
-			i++;
-			j = 0;
-		}
-		if (i == rearrangement[k]) i++;
-		if (matr[rearrangement[k]][i] > matr[rearrangement[k]][i + 1] && (i + 1) != rearrangement[k]) rearrangement[++k] = i + 1;
-		else rearrangement[++k] = i;
-	}
-	for (i = 0; i < numberCities; i++) {
-		k = rearrangement[i] - 1;
-		l = rearrangement[i + 1] - 1;
-		lowerCost += matr[k][l];
-	}
+		
 
 
+
+	lowerCost = CostWay(matr, rearrangement, numberCities);
 	std::cout << std::endl;
 	for (i = 0; i < numberCities + 1; i++) std::cout << rearrangement[i]<< " ";
-	/*for (i = 0; i < numberCities + 1; i++) std::cout << cheapest[i]<< " ";*/
 	std::cout<<std::endl<<"lowerCost: " << lowerCost;
 	std::cout <<std::endl<< "Enter number of Cities: " <<numberCities << std::endl;
 	std::cout << "Cite start: " <<start << std::endl;
@@ -110,6 +103,22 @@ void InputMatrD(int** matr, int m, int n)
 				printf(" 0 ");
 			}
 		}
+}
+void RandomMatr(int** matr, int n)
+{
+	srand(time(0));
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++) {
+	matr[i][j] = 1+(rand() % 20);
+	if (i == j)matr[i][j] = 0;
+		}
+}
+
+int CostWay(int** matr,int* rearrangement, int numberCities) {
+	int i,cost=0;
+	for (i = 0; i < numberCities; i++) 
+		cost += matr[(rearrangement[i]-1)][(rearrangement[i+1]-1)];
+	return cost;
 }
 
 void OutputMatrD(int** matr, int m, int n)
