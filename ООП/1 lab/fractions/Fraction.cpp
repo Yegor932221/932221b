@@ -1,43 +1,89 @@
 #include "Fraction.h"
 
-void Fraction::Print() {
-	std::cout << numerator << '/' << denominator << std::endl;
+void Fraction::Print()const {
+	std::cout << m_numerator << '/' << m_denominator << std::endl;
 }
 
-Fraction Fraction::Sum(Fraction b) {
+Fraction Fraction::Sum(const Fraction &b)const {
 	Fraction c;
-	c.numerator = (numerator * b.denominator) + (b.numerator * denominator);
-	c.denominator = denominator * b.denominator;
+	c.m_numerator = (m_numerator * b.m_denominator) + (b.m_numerator * m_denominator);
+	c.m_denominator = m_denominator * b.m_denominator;
 	return c;
 }
 
-Fraction Fraction::Difference(Fraction b) {
+Fraction Fraction::Difference(const Fraction &b)const {
 	Fraction c;
-	c.numerator = (numerator * b.denominator) - (b.numerator * denominator);
-	c.denominator = denominator * b.denominator;
+	c.m_numerator = (m_numerator * b.m_denominator) - (b.m_numerator * m_denominator);
+	c.m_denominator = m_denominator * b.m_denominator;
 	return c;
 }
 
-Fraction Fraction::Multiplication(Fraction b) {
+Fraction Fraction::Multiplication(const Fraction &b) const {
 	Fraction c;
-	c.numerator = (numerator * b.numerator);
-	c.denominator = (b.denominator * denominator);
+	c.m_numerator = (m_numerator * b.m_numerator);
+	c.m_denominator = (b.m_denominator * m_denominator);
 	return c;
 }
 
-Fraction Fraction::Division(Fraction b) {
+Fraction Fraction::Division(const Fraction &b) const {
 	Fraction c;
-	c.numerator = (numerator * b.denominator);
-	c.denominator = (b.numerator * denominator);
+	c.m_numerator = (m_numerator * b.m_denominator);
+	c.m_denominator = (b.m_numerator * m_denominator);
 	return c;
 }
 
 Fraction::Fraction() {
-	numerator = 1;
-	denominator = 1;
+	m_numerator = 0;
+	m_denominator = 1;
 }
 
-Fraction::Fraction(int numerator, int denominator) {
-	this->numerator = numerator;
-	this->denominator = denominator;
+Fraction::Fraction(const int numerator, const int denominator)
+//Первая очередь
+// :numerator(numerator)
+//,denominator(denominator)
+{
+	m_numerator = numerator;//Третья очередь
+
+	if (denominator == 0) {
+		std::cerr << "Fraction::Fraction: error: denominator is 0, result will be numerator/1.\n";
+		m_denominator = 1;
+	}
+	else  m_denominator = denominator;//Третья очередь
+
+	if (denominator < 0) {
+		m_denominator *= -1;
+		m_numerator *= -1;
+	}
+}
+//Вторая очередь в .h
+
+void Fraction::SetNumerator(const int value) {
+	m_numerator = value;
+}
+
+
+void Fraction::SetDenominator(const int value) {
+	if (value == 0) {
+		std::cerr << "Fraction::Fraction: error: denominator is 0, result will be numerator/1.\n";
+		m_denominator = 1;
+	}
+	else {
+		m_denominator = value;
+	}
+} 
+
+int Fraction::GetNumerator()const {
+	return m_numerator;
+}
+
+int Fraction::GetDenominator()const {
+	return m_denominator;
+}
+
+bool Fraction::operator==(const Fraction &other)const {
+	return(m_numerator == other.m_numerator && m_denominator == other.m_denominator);
+}
+
+bool Fraction::operator!=(const Fraction &other)const {
+	return !operator==(other);
 }

@@ -4,19 +4,29 @@
 
 int main() 
 {
-	Fraction f, g;
-	f.Print();
-	Fraction h;
-	f.numerator = 1;
-	f.denominator = 2;
-	g.numerator = 1;
-	g.denominator = 4;
-	h=f.Sum(g);
-	h.Print();
-	h = f.Difference(g);
-	h.Print();
-	h = f.Multiplication(g);
-	h.Print();
-	h = f.Division(g);
-	h.Print();
+	using std::cout;
+		using std::cin;
+	Fraction f(1,2), g(3,4);
+	int n, d;
+	cout << "Enter two Fraction: ";
+	cin >> n >> d;
+	while (d == 0) {
+		cout << "/n" << "Denominator can't be zero!!!! Please enter a valid denominator: ";
+		cin >> d;
+	}
+	Fraction a(n, d);
+
+	cin >> n >> d;
+	while (d == 0) {
+		cout << "\n" << "Denominator can't be zero!!!! Please enter a valid denominator: ";
+		cin >> d;
+	}
+	Fraction b(n, d);
+
+	if (a.operator==(b))
+{
+		cout << "Fractions is equal.\n";
+	}
+	else cout << "Fractions isn't equal.\n";
+
 }

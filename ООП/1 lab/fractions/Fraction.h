@@ -3,16 +3,29 @@
 class Fraction
 {
 public:
+
 	Fraction();
-	Fraction(int numerator, int denominator);
+	Fraction(const int numerator, const int denominator);
 	~Fraction() = default;
-	void Print();
-	Fraction Sum(Fraction b);
-	Fraction Difference(Fraction b);
-	Fraction Multiplication(Fraction b);
-	Fraction Division(Fraction b);
-public:
-	int numerator;
-	int denominator;
+	void Print() const;
+	Fraction Sum(const Fraction &b) const;
+	Fraction Difference(const Fraction &b) const;
+	Fraction Multiplication(const Fraction &b) const;
+	Fraction Division(const Fraction &b) const;
+
+	void SetNumerator(const int value);
+
+	void SetDenominator(const int value);
+
+	int GetNumerator() const;//или можно назвать int numerator();
+
+	int GetDenominator() const;//или можно назвать int denominator();
+
+	bool operator==(const Fraction &other) const;
+	bool operator!=(const Fraction &other) const;
+private:
+
+	int m_numerator=0;//Вторая очередь
+	int m_denominator=1;//Вторая очередь
 };
 
