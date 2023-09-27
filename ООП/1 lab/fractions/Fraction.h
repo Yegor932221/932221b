@@ -12,6 +12,9 @@ public:
 	Fraction Difference(const Fraction &b) const;
 	Fraction Multiplication(const Fraction &b) const;
 	Fraction Division(const Fraction &b) const;
+	Fraction Reduction();
+	bool operator>(const Fraction& other)const;
+	bool operator<(const Fraction& other)const;
 
 	void SetNumerator(const int value);
 
@@ -23,6 +26,10 @@ public:
 
 	bool operator==(const Fraction &other) const;
 	bool operator!=(const Fraction &other) const;
+
+	int Whole();//unique method 1
+
+	Fraction& operator=(Fraction& other);//unique method 2	
 private:
 
 	int m_numerator=0;//Вторая очередь

@@ -32,6 +32,19 @@ Fraction Fraction::Division(const Fraction &b) const {
 	return c;
 }
 
+Fraction Fraction::Reduction() {
+	int avg=1;
+	Fraction c;
+	for (int i = 1; i <= m_denominator && i <= m_numerator; i++) {
+		if (m_numerator % i == 0 && m_denominator % i == 0) { 
+			avg = i; 
+		}
+	}
+	c.m_numerator =m_numerator/avg;
+	c.m_denominator =m_denominator/avg;
+	return c;
+}
+
 Fraction::Fraction() {
 	m_numerator = 0;
 	m_denominator = 1;
@@ -86,4 +99,24 @@ bool Fraction::operator==(const Fraction &other)const {
 
 bool Fraction::operator!=(const Fraction &other)const {
 	return !operator==(other);
+}
+
+bool Fraction::operator>(const Fraction& other)const {
+	if (m_numerator * other.m_denominator > other.m_numerator * m_denominator)return 1;
+	else return 0;
+}
+
+bool Fraction::operator<(const Fraction& other)const {
+	if (m_numerator * other.m_denominator < other.m_numerator * m_denominator)return 1;
+	else return 0;
+}
+
+int Fraction::Whole() {
+	return(m_numerator / m_denominator);
+}
+
+Fraction& Fraction::operator=(Fraction& other) {
+	m_denominator = other.m_denominator;
+	m_numerator = other.m_numerator;
+	return *this;
 }
