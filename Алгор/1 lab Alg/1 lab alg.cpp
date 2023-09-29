@@ -41,9 +41,6 @@ int main() {
 		j++;
 	}
 	cost = CostWay(matr, rearrangement, numberCities);
-	std::cout << std::endl<<"0. ";
-	for (i = 0; i < numberCities + 1; i++) std::cout << rearrangement[i] << " ";
-	std::cout << std::endl << "cost." << k << ": " << cost << std::endl;
 	lowerCost = cost;
 
 	for (i = 1; i < numberCities; i++)full = full * i; //начало полного перебора
@@ -71,11 +68,10 @@ int main() {
 				i++; j--;
 			}
 			//следующая перестановка получена
-			std::cout << k << ". ";
-			for (i = 0; i < numberCities + 1; i++) std::cout << rearrangement[i] << " ";
+		
 			cost = CostWay(matr, rearrangement, numberCities);
 
-			std::cout << std::endl << "cost." << k << ": " << cost<<std::endl;
+			
 
 				if (cost < lowerCost) {
 					lowerCost = cost;
@@ -91,9 +87,6 @@ int main() {
 	std::cout <<std::endl<< "Enter number of Cities: " <<numberCities << std::endl;
 	std::cout << "Cite start: " <<first << std::endl;
 
-
-	OutputMatrD(matr, numberCities, numberCities);
-	std::cout << "\n";
 	int min,max=0,o=0,ki,kj;
 	int cost2 = 0;
 	int** shortest;
@@ -138,8 +131,6 @@ int main() {
 			matr[ki][i] = 0;
 			matr[j][kj] = 0;
 		}
-		std::cout << "\n" << "min: " << min << "\n";
-		OutputMatrD(matr, numberCities, numberCities);
 		cost2 += shortest[2][k];
 	}
 	for(i = 0; i <numberCities;i++)
