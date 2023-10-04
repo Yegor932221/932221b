@@ -18,7 +18,7 @@ public:
 
 	void SetNumerator(const int value);
 
-	void SetDenominator(const int value);
+	void SetDenominator(int value);
 
 	int GetNumerator() const;//или можно назвать int numerator();
 
@@ -29,7 +29,8 @@ public:
 
 	int Whole();//unique method 1
 
-	Fraction& operator=(Fraction& other);//unique method 2	
+	Fraction& operator=(const Fraction& other);//unique method 2	
+	void Input();
 private:
 
 	int m_numerator=0;//Вторая очередь

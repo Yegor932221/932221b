@@ -120,3 +120,17 @@ Fraction& Fraction::operator=(Fraction& other) {
 	m_numerator = other.m_numerator;
 	return *this;
 }
+
+void Fraction::Fraction::Input()
+{
+	std::cout << "Enter the numerator : ";
+	std::cin >> m_numerator;
+
+	std::cout << "Enter the denominator : ";
+	std::cin >> m_denominator;
+
+	while (m_denominator == 0) {
+		std::cout << ("Denominator can`t be zero! Please, enter a vallid denominator: ");
+		std::cin >> m_denominator;
+	}
+}
