@@ -22,8 +22,7 @@ int main() {
 	std::cin >> first;
 
 	matr = new int* [numberCities];
-	for (i = 0; i < numberCities; i++)
-		matr[i] = new int[numberCities];
+	for (i = 0; i < numberCities; i++) matr[i] = new int[numberCities];
 
 	cheapest = new int[numberCities + 1];
 
@@ -68,9 +67,7 @@ int main() {
 void Weist(int** matr, int* weist, int numberCities) {
 	for (int i = 0; i < numberCities; i++) {
 		int sum = 0;
-		for (int j = 0; j < numberCities; j++) {
-			sum += matr[i][j];
-		}
+		for (int j = 0; j < numberCities; j++) {sum += matr[i][j];}
 		weist[i] = sum;
 	}
 }
@@ -98,8 +95,7 @@ void RandomMatr(int** matr, int n)
 
 int CostWay(int** matr, int* rearrangement, int numberCities) {
 	int i, cost = 0;
-	for (i = 0; i < numberCities; i++)
-		cost += matr[(rearrangement[i] - 1)][(rearrangement[i + 1] - 1)];
+	for (i = 0; i < numberCities; i++) cost += matr[(rearrangement[i] - 1)][(rearrangement[i + 1] - 1)];
 	return cost;
 }
 
@@ -121,11 +117,6 @@ void Swap(int* a, int b, int c) {
 bool Cycl(int** ways, int** matr, int k, int numb) {
 	if (k == numb) return 1;
 	int g = 0, d = k;
-	/*int y;
-	for ( y = 0; y < numb; y++) {
-		if (matr[ways[1][k]][y] != 0) break;
-	}
-	if (y == numb)return 0;*/
 	for (int i = 0; i < k; i++) {
 		if (ways[1][d] == ways[0][i]) {
 			if (ways[1][i] == ways[0][d]) return 0;
@@ -160,9 +151,7 @@ void WayBust(int numberCities, int first, int* cheapest, int** matr) {
 	for (k = 1; k < full; k++) {
 		maxI = -1; maxJ = -1;
 
-		for (i = 1; i < (numberCities - 1); i++) {
-			if (rearrangement[i] < rearrangement[(i + 1)]) maxI = i;
-		}
+		for (i = 1; i < (numberCities - 1); i++) { if (rearrangement[i] < rearrangement[(i + 1)]) maxI = i;}
 
 		if (maxI == -1) break;
 
@@ -187,8 +176,7 @@ void WayBust(int numberCities, int first, int* cheapest, int** matr) {
 
 		if (cost < lowerCost) {
 			lowerCost = cost;
-			for (j = 0; j < (numberCities + 1); j++)
-				cheapest[j] = rearrangement[j];
+			for (j = 0; j < (numberCities + 1); j++) cheapest[j] = rearrangement[j];
 		}
 
 	}
@@ -201,14 +189,11 @@ int Evr(int numberCities, int** matr) {
 	int cost2 = 0;
 	int** shortest;
 	shortest = new int* [3];
-	for (i = 0; i < 3; i++) {
-		shortest[i] = new int[numberCities];
-	}
+	for (i = 0; i < 3; i++) {shortest[i] = new int[numberCities];}
 
 	for (i = 0; i < numberCities; i++)
-		for (j = 0; j < numberCities; j++) {
-			if (matr[i][j] > max)max = matr[i][j];
-		}
+		for (j = 0; j < numberCities; j++) {if (matr[i][j] > max)max = matr[i][j];}
+
 	for (k = 0; k < numberCities; k++) {
 
 		min = max;
