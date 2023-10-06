@@ -2,16 +2,13 @@
 #include <stdlib.h> 
 #include <time.h> 
 #include <iostream>  
+int BMsearch(int* TAB, std::string text, std::string searchText, int start, int end);
+int* GenerationTab(std::string text, std::string searchText);
 
 int main() {
-	int TAB[256],i,m;
 	std::string text = "std::move_iterator is an iterator adaptor which behaves exactly like the underlying iterator", searchText = "tor";
-	m = searchText.length();
-
-	for (i = 0; i < 256; i++) TAB[i] = m;
-
-	for (i = 0; i < m - 1; i++) TAB[searchText[i]] = m - 1 - i;
-
+	int* TAB;
+	TAB=GenerationTab(text,searchText);
 	BMsearch(TAB, text, searchText, 0, -1);
 }
 
@@ -35,4 +32,16 @@ int BMsearch(int* TAB, std::string text, std::string searchText,int start,int en
 	if (j < 0) return k + 1;
 
 	return -1;
+}
+
+int* GenerationTab(std::string text, std::string searchText) {
+	int i, m;
+	int* TAB=new int[256];
+
+	m = searchText.length();
+
+	for (i = 0; i < 256; i++) TAB[i]= m;
+
+	for (i = 0; i < m - 1; i++) TAB[searchText[i]]= m - 1 - i;
+	return TAB;
 }
