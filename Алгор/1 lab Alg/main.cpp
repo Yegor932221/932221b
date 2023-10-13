@@ -8,55 +8,59 @@ void Swap(int* a, int b, int c);
 int CostWay(int** matr, int* rearrangement, int numberCities);
 void RandomMatr(int** matr, int n);
 void Weist(int** matr, int* weist, int numberCities);
-bool Cycl(int** ways, int** matr, int k, int numb);
-void WayBust(int numberCities, int first, int* cheapest, int** matr);
+bool Cycl(int** ways, int** matr, int k, int numb, int i, int j);
+void WayBust(int numberCities, int first, int* cheapest, int** matr, int* expensive);
 int Evr(int numberCities, int** matr);
 
 int main() {
-	int first, numberCities, i, lowerCost = 0, cost2;;
-	int* cheapest;
-	int** matr;
-	std::cout << "Enter number of Citiesgg:" << std::endl;
-	std::cin >> numberCities;
-	std::cout << "Cite start" << std::endl;
-	std::cin >> first;
 
-	matr = new int* [numberCities];
-	for (i = 0; i < numberCities; i++)
-		matr[i] = new int[numberCities];
+	srand(time(0));
+		int first=1, numberCities=6, i, lowerCost = 0, cost2,maxCost;
+		int* cheapest, *expensive;
+		int** matr;
 
-	cheapest = new int[numberCities + 1];
 
-	RandomMatr(matr, numberCities);
-	std::cout << "Output matr:" << std::endl;
-	OutputMatrD(matr, numberCities, numberCities);
+		matr = new int* [numberCities];
+		for (i = 0; i < numberCities; i++)
+			matr[i] = new int[numberCities];
 
-	auto start = std::chrono::high_resolution_clock::now();
+		cheapest = new int[numberCities + 1];
+		expensive = new int[numberCities + 1];
 
-	WayBust(numberCities, first, cheapest, matr);
+		for (int otch = 0; otch < 10; otch++) {
+			RandomMatr(matr, numberCities);
+			std::cout << "\n\nOutput matr:" << std::endl;
+			OutputMatrD(matr, numberCities, numberCities);
 
-	auto end = std::chrono::steady_clock::now();
-	float time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+			auto start = std::chrono::high_resolution_clock::now();
 
-	std::cout << std::endl << "First decision time:" << time << std::endl;
+			WayBust(numberCities, first, cheapest, matr, expensive);
+			maxCost = CostWay(matr, expensive, numberCities);
+			auto end = std::chrono::steady_clock::now();
+			float time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
-	for (i = 0; i < numberCities + 1; i++) std::cout << cheapest[i] << " ";
-	lowerCost = CostWay(matr, cheapest, numberCities);
+			std::cout << std::endl << "First decision time:" << time << std::endl;
 
-	std::cout << std::endl << "lowerCost: " << lowerCost;
+			for (i = 0; i < numberCities + 1; i++) std::cout << cheapest[i] << " ";
+			lowerCost = CostWay(matr, cheapest, numberCities);
 
-	start = std::chrono::high_resolution_clock::now();
+			std::cout << std::endl << "lowerCost: " << lowerCost<<std::endl;
 
-	cost2 = Evr(numberCities, matr);
+			start = std::chrono::high_resolution_clock::now();
 
-	end = std::chrono::high_resolution_clock::now();
-	time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-	std::cout << "Cost evristics: " << cost2;
-	std::cout << "\nEvristics decision time: " << time;
-	std::cout << "\nQuality percentage:" << (lowerCost * 100 / cost2) << "%";
-	for (i = 0; i < numberCities; i++) delete[]matr[i];
-	delete[] matr;
-	delete[] cheapest;
+			cost2 = Evr(numberCities, matr);
+		
+			end = std::chrono::high_resolution_clock::now();
+			time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+			std::cout << "Cost evristics: " << cost2;
+			std::cout << "\nMax Cost evristics: " << maxCost;
+			std::cout << "\nEvristics decision time: " << time;
+			std::cout << "\nQuality percentage:" <<100-(((cost2 - lowerCost)* 100)/ (maxCost-lowerCost)) << "%";
+		}
+			for (i = 0; i < numberCities; i++) delete[]matr[i];
+			delete[] matr;
+			delete[]expensive;
+		delete[] cheapest;
 }
 
 
@@ -88,7 +92,6 @@ void InputMatrD(int** matr, int m, int n)
 }
 void RandomMatr(int** matr, int n)
 {
-	srand(time(0));
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++) {
 			matr[i][j] = 1 + (rand() % 20);
@@ -118,23 +121,24 @@ void Swap(int* a, int b, int c) {
 	a[c] = d;
 }
 
-bool Cycl(int** ways, int** matr, int k, int numb) {
-	if (k == numb) return 1;
-	int g = 0, d = k;
-	for (int i = 0; i < k; i++) {
-		if (ways[1][d] == ways[0][i]) {
-			if (ways[1][i] == ways[0][d]) return 0;
-			d = i;
-			i = 0;
-			g++;
+bool Cycl(int* ways, int** matr, int k, int numb, int i, int j) {
+	if (k == (numb-1)) return 1;
+	int g = 0, d = j;
+	ways[i] = j;
+	for(;ways[d]>=0;d = ways[d])
+	{
+		g++;
+		if (g > numb) {
+			ways[i] = -1;
+			return false;
 		}
-		if (g == numb) return 0;
 	}
-	return 1;
+	ways[i] = -1;
+	return true;
 }
 
-void WayBust(int numberCities, int first, int* cheapest, int** matr) {
-	int i, j, k, full=1, cost, maxI, maxJ, lowerCost;
+void WayBust(int numberCities, int first, int* cheapest, int** matr, int* expensive) {
+	int i, j, k, full=1, cost, maxI, maxJ, lowerCost,maxCost=0;
 	int* rearrangement;
 
 	rearrangement = new int[numberCities + 1];
@@ -185,6 +189,10 @@ void WayBust(int numberCities, int first, int* cheapest, int** matr) {
 			for (j = 0; j < (numberCities + 1); j++)
 				cheapest[j] = rearrangement[j];
 		}
+		if (cost > maxCost) {maxCost = cost;
+		for (j = 0; j < (numberCities + 1); j++)
+			expensive[j] = rearrangement[j];
+	}
 
 	}
 	delete[] rearrangement;
@@ -194,54 +202,41 @@ void WayBust(int numberCities, int first, int* cheapest, int** matr) {
 int Evr(int numberCities, int** matr) {
 	int min, max = 0, o = 0, ki, kj, i, j, k;
 	int cost2 = 0;
-	int** shortest;
-	shortest = new int* [3];
-	for (i = 0; i < 3; i++) {
-		shortest[i] = new int[numberCities];
+	int* shortest;
+	shortest = new int [numberCities];
+
+	for (i = 0; i < numberCities; i++) {
+		shortest[i] = -1;
 	}
 
-	for (i = 0; i < numberCities; i++)
-		for (j = 0; j < numberCities; j++) {
-			if (matr[i][j] > max)max = matr[i][j];
-		}
 	for (k = 0; k < numberCities; k++) {
-
-		min = max;
-		shortest[0][k] = 0;
-		shortest[1][k] = 0;
-		shortest[2][k] = 0;
-
+		min = INT_MAX;
+		kj = 0;
+		ki = 0;
 		for (i = 0; i < numberCities; i++)
 			for (j = 0; j < numberCities; j++) {
 				if (matr[i][j] != 0 && min > matr[i][j]) {
-					shortest[0][k] = i;
-					shortest[1][k] = j;
-					shortest[2][k] = matr[i][j];
-					kj = j;
-					ki = i;
-					if (Cycl(shortest, matr, k, numberCities) == 1) {
+					if (Cycl(shortest,matr,k,numberCities,i,j)==true) {
+						shortest[i] = -1;
 						min = matr[i][j];
 						kj = j;
 						ki = i;
-						shortest[2][k] = matr[i][j];
 					}
-					else matr[i][j] = 0;
+						else matr[i][j] = 0;
 				}
 			}
-		shortest[0][k] = ki;
-		shortest[1][k] = kj;
+		shortest[ki] = kj;
+		cost2 += matr[ki][shortest[ki]];
 		for (i = 0, j = 0; i < numberCities && j < numberCities; j++, i++)
 		{
 			matr[ki][i] = 0;
 			matr[j][kj] = 0;
 		}
-		cost2 += shortest[2][k];
 	}
 	for (i = 0; i < numberCities; i++)
 	{
-		std::cout << "(" << shortest[0][i] << "-" << shortest[1][i] << ")\n";
+		std::cout << "(" << i << "-" << shortest[i] << ")\n";
 	}
-	for (i = 0; i < 3; i++) delete[]shortest[i];
 	delete[] shortest;
 	return cost2;
 }
