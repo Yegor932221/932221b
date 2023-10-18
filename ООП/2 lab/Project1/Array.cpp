@@ -2,15 +2,18 @@
 #include<assert.h>
 #include "Array.h"
 
-Array::Array(const int size, const int value)
-{
+Array::Array(const int size, const int value) {
 	if (size < 0) {
-	std::cerr << "Array::Array: size is negative, invert...\n";
-		m_size = -m_size;
+		std::cerr << "Array::Array: size is negative, invert...\n";
+		m_size = -size;
+
 	}
-	else m_size = size;
+	else {
+		m_size = size;
+	}
+
 	m_array = new int[m_size];
-		std::cout << m_array << '/n';
+
 	for (int i = 0; i < m_size; i++) {
 		m_array[i] = value;
 	}
@@ -60,7 +63,7 @@ Array& Array::operator=(const Array& other)
 
 void Array::Print() const 
 {
-	std::cout << this;
+	std::cout << *this;
 }
 
 int Array::Size() const
@@ -117,10 +120,108 @@ std::ostream& operator<<(std::ostream& stream, const Array& arr) {
 	return stream;
 }
 
-std::ostream& operator>>(std::ostream& stream, Array& arr) {
+std::istream& operator>>(std::istream& stream, Array& arr) {
 	for (int i = 0; i < arr.Size() - 1; i++) {
 		stream >> arr[i];
 	}
-
 	return stream;
+}
+
+void Array::Resize(int size) {
+	if (size < 0) {
+		std::cerr << "Array::Array: size is negative, invert...\n";
+		size = -size;
+	}
+	Array res(size);
+
+	int cout = std::min(m_size, size);
+	for (int i = 0; i < cout; i++) {
+		res.m_array[i] = m_array[i];
+	}
+	res.Swap(*this);
+}
+
+void Array::Sorting() {
+	for (int s = (m_size / 2) + 1; s > 0; s /= 2) {
+		for (int i = s; i < m_size; ++i) {
+			for (int j = i - s; j >= 0 && m_array[j] > m_array[j + s]; j -= s) {
+				int temp = m_array[j];
+				m_array[j] = m_array[j + s];
+				m_array[j + s] = temp;
+			}
+		}
+	}
+}
+
+bool Array::Insert(int element, int index) {
+	if (index>=0 && index<=m_size) {
+		Array res((m_size + 1));
+
+		for (int i = 0; i < index; i++) {
+			res.m_array[i] = m_array[i];
+		}
+		res.m_array[index] = element;
+		for (int i = index+1; i < res.m_size; i++) {
+			res.m_array[i] = m_array[i-1];
+		}
+		res.Swap(*this);
+		return true;
+	}
+	else {
+		std::cerr << "Index is incorrect\n";
+		return false;
+	}
+}
+
+bool Array::DeleteIndex(int index) {
+	if (index>0 &&index < m_size) {
+		Array res((m_size-1));
+
+		for (int i = 0; i < index; i++) {
+			res.m_array[i] = m_array[i];
+		}
+		for (int i = index+1; i < m_size; i++) {
+			res.m_array[i-1] = m_array[i];
+		}
+		res.Swap(*this);
+		return true;
+	}
+	else {
+		std::cerr << "Index is incorrect\n";
+		return false;
+	}
+}
+
+bool Array::DeleteValue(int element) {
+	for (int i = 0; i < m_size; i++) {
+		if (m_array[i] == element) {
+			Array res((m_size - 1));
+
+			for (int j = 0; j < i; j++) {
+				res.m_array[j] = m_array[j];
+			}
+			for (int j = i + 1; j < m_size; j++) {
+				res.m_array[j - 1] = m_array[j];
+			}
+			res.Swap(*this);
+			return true;
+		}
+	}
+	return false;
+}
+
+void Array::DeleteAllValue(int element) {
+	for (int i = (m_size-1); i >=0; i--) {
+		if (m_array[i] == element) {
+			Array res(m_size - 1);
+
+			for (int j = res.m_size; j >= i; j--) {
+				res.m_array[j] = m_array[j+1];
+			}
+			for (int j = i-1; j >=0 ; j--) {
+				res.m_array[j] = m_array[j];
+			}
+			res.Swap(*this);
+		}
+	}
 }

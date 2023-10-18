@@ -2,7 +2,7 @@
 class Array
 {
 public:
-	Array(const int size=10, const int value=0);
+	Array(const int size = 10, const int value = 0);
 	
 	Array(const Array& other);
 
@@ -30,7 +30,17 @@ public:
 
 	Array (Array&& other);
 
+	void Resize(int size);
 
+	void Sorting();
+
+	bool Insert(int element, int index);
+
+	bool DeleteIndex(int index);
+
+	bool DeleteValue(int element);
+
+	void DeleteAllValue(int element);
 private:
 	int *m_array=nullptr;
 	int m_size=0;
