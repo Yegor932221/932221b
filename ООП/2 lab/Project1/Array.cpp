@@ -225,3 +225,25 @@ void Array::DeleteAllValue(int element) {
 		}
 	}
 }
+
+int Array::Max() {
+	int max = m_array[0];
+	for (int i = 1; i < m_size; i++) {
+		if (max < m_array[i])
+		{
+			max =m_array[i];
+		}
+	}
+	return max;
+}
+
+int Array::Min() {
+	int min = m_array[0];
+	for (int i = 1; i < m_size; i++) {
+		if (min > m_array[i])
+		{
+			min = m_array[i];
+		}
+	}
+	return min;
+}

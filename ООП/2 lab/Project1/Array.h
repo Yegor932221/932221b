@@ -41,6 +41,10 @@ public:
 	bool DeleteValue(int element);
 
 	void DeleteAllValue(int element);
+
+	int Max();
+
+	int Min();
 private:
 	int *m_array=nullptr;
 	int m_size=0;

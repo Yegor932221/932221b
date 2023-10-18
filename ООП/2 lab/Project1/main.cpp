@@ -27,8 +27,8 @@ int main() {
 	arr[9] = 4;
 	arr[3] = 9;
 	arr.Insert(222, 2);
+	std::cout<<arr.Max();
 
-	arr.Print();
 	return 0;
 }
                                                                                                                                                                                                                                                                                                                                                                                                                          
