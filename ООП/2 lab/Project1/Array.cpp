@@ -247,3 +247,20 @@ int Array::Min() {
 	}
 	return min;
 }
+
+Array Array:: operator +(const int value)const
+{
+	Array tmp_Array(m_size + 1);
+	for (int i = 0; i < m_size; ++i)
+	{
+		tmp_Array.m_array[i] = m_array[i];
+	}
+	tmp_Array.m_array[m_size] = value;
+	return tmp_Array;
+}
+
+Array& Array:: operator+=(int value) {
+	Array tmp = *this + value;
+	Swap(tmp);
+	return *this;
+}

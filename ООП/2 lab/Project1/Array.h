@@ -45,6 +45,10 @@ public:
 	int Max();
 
 	int Min();
+
+	Array operator +(const int value)const;
+
+	Array& operator+=(int value);
 private:
 	int *m_array=nullptr;
 	int m_size=0;
