@@ -1,60 +1,68 @@
 #pragma once
+template <typename ItemType>
 class Array
 {
 public:
-	Array(const int size = 10, const int value = 0);
+	//template<typename IT, typename AT>
+	//class Iterator;
+	//typedef Iterator<ItemType, Array> TmpIterator;
+	//typedef Iterator<const ItemType, const Array> TmpConstIterator;
+
+	Array(const int size = 10, const ItemType &value = 0);
 	
 	Array(const Array& other);
 
+	Array(Array&& other);
+
 	~Array();
 
-	int &operator[](const int index);
+	ItemType &operator[](const int index);
 
-	const int& operator[](const int index) const;
+	const ItemType& operator[](const int index) const;
 
 	Array &operator=(const Array& other);
+
+	Array& operator=(Array&& other);
 
 	void Print() const;
 
 	int Size() const;
 
-	int Search(int l);
+	int Search(ItemType l);
 
 	Array& operator+(const Array& other) const;
 
 	Array& operator+=(const Array& other);
 
-	Array& operator=( Array&& other);
-
 	void Swap(Array& other);
-
-	Array (Array&& other);
 
 	void Resize(int size);
 
 	void Sorting();
 
-	bool Insert(int element, int index);
+	bool Insert(const ItemType& element, int index);
 
 	bool DeleteIndex(int index);
 
-	bool DeleteValue(int element);
+	bool DeleteValue(const ItemType element);
 
-	void DeleteAllValue(int element);
+	void DeleteAllValue(const ItemType element);
 
-	int Max();
+	ItemType Max() const;
 
-	int Min();
+	ItemType Min() const;
 
-	Array operator +(const int value)const;
+	Array operator +(const ItemType value)const;
 
-	Array& operator+=(int value);
+	Array& operator+=(const ItemType& value);
+
+	
 private:
-	int *m_array=nullptr;
+	ItemType*m_array=nullptr;
 	int m_size=0;
 
 };
-
-std::ostream& operator<<(std::ostream& stream, const Array& arr);
-std::ostream& operator>>(std::ostream& stream, Array& arr);
-
+template <typename ItemType>
+std::ostream& operator<<(std::ostream& stream, const Array<ItemType>& arr);
+template <typename ItemType>
+std::istream& operator>>(std::istream& stream, Array<ItemType>& arr);

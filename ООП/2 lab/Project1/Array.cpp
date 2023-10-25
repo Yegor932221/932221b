@@ -2,7 +2,8 @@
 #include<assert.h>
 #include "Array.h"
 
-Array::Array(const int size, const int value) {
+template <typename ItemType>
+Array<ItemType>::Array(const int size, const ItemType &value) {
 	if (size < 0) {
 		std::cerr << "Array::Array: size is negative, invert...\n";
 		m_size = -size;
@@ -19,7 +20,8 @@ Array::Array(const int size, const int value) {
 	}
 }
 
-Array::Array(const Array& other)
+template <typename ItemType>
+Array<ItemType>::Array(const Array& other)
 	: m_size(other.m_size)
 {
 	m_array = new int[m_size];
@@ -28,24 +30,34 @@ Array::Array(const Array& other)
 	}
 }
 
-Array::~Array()
+template <typename ItemType>
+Array<ItemType>::Array(Array&& other)
+{
+	Swap(other);
+}
+
+template <typename ItemType>
+Array<ItemType>::~Array()
 {
 	delete[] m_array;
 }
 
-int& Array::operator[](const int index) 
+template <typename ItemType>
+ItemType& Array<ItemType>::operator[](const int index)
 {
 	assert(index >= 0 && index < m_size);
 	return m_array[index];
 }
 
-const int& Array::operator[](const int index) const
+template <typename ItemType>
+const ItemType& Array<ItemType>::operator[](const int index) const
 {
 	assert(index >= 0 && index < m_size);
 	return m_array[index];
 }
 
-Array& Array::operator=(const Array& other)
+template <typename ItemType>
+Array<ItemType>& Array<ItemType>::operator=(const Array& other)
 {
 	if (this==&other) {
 		return *this;
@@ -61,25 +73,35 @@ Array& Array::operator=(const Array& other)
 	return *this;
 }
 
-void Array::Print() const 
+template <typename ItemType>
+Array<ItemType>& Array<ItemType>::operator = (Array&& other)
+{
+	Swap(other);
+	return *this;
+}
+
+template <typename ItemType>
+void Array<ItemType>::Print() const
 {
 	std::cout << *this;
 }
 
-int Array::Size() const
+template <typename ItemType>
+int Array<ItemType>::Size() const
 {
 	return m_size;
 }
 
-int Array::Search(int l) {
+template <typename ItemType>
+int Array<ItemType>::Search(ItemType l) {
 	for (int i = 0; i < m_size; i++) {
 		if (m_array[i] == l) return i;
 	}
 	return -1;
 }
 
-
-Array& Array::operator+(const Array& other) const {
+template <typename ItemType>
+Array<ItemType>& Array<ItemType>::operator+(const Array& other) const {
 	Array res(m_size+other.m_size);
 	for (int i = 0; i < m_size; i++) {
 		res.m_array[i] = m_array[i];
@@ -90,44 +112,43 @@ Array& Array::operator+(const Array& other) const {
 	return res;
 }
 
-Array &Array::operator+=(const Array& other) {
+template <typename ItemType>
+Array<ItemType> & Array<ItemType>::operator+=(const Array& other) {
 	Array tmp = *this + other;
 	this->Swap(tmp);
 	return *this;
 }
 
-Array& Array::operator=(Array&& other) {
-	Swap(other);
-	return *this;
-}
-
-void Array::Swap(Array& other) {
+template <typename ItemType>
+void Array<ItemType>::Swap(Array& other) {
 	std::swap(m_size, other.m_size);
 	std::swap(m_array, other.m_array);
 }
 
-//Array::Array(Array&& other) {
-// m_size==0;m_array==nullptr
-//}
-
-std::ostream& operator<<(std::ostream& stream, const Array& arr) {
-	std::cout << '[';
-	for (int i = 0; i <arr.Size() - 1; i++) {
-		stream << arr[i] << ' ';
+template <typename ItemType>
+std::ostream& operator<<(std::ostream& stream, const Array<ItemType>& arr)
+{
+	stream << "[";
+	for (int i = 0; i < arr.Size() - 1; ++i)
+	{
+		std::cout << arr[i] << ",";
 	}
-	stream << arr[arr.Size() - 1] << "]\n";
-
+	std::cout << arr[arr.Size() - 1] << "]\n";
 	return stream;
 }
 
-std::istream& operator>>(std::istream& stream, Array& arr) {
-	for (int i = 0; i < arr.Size() - 1; i++) {
+template <typename ItemType>
+std::istream& operator>>(std::istream& stream, Array<ItemType>& arr)
+{
+	for (int i = 0; i < arr.Size(); ++i)
+	{
 		stream >> arr[i];
 	}
 	return stream;
 }
 
-void Array::Resize(int size) {
+template <typename ItemType>
+void Array<ItemType>::Resize(int size) {
 	if (size < 0) {
 		std::cerr << "Array::Array: size is negative, invert...\n";
 		size = -size;
@@ -141,11 +162,12 @@ void Array::Resize(int size) {
 	res.Swap(*this);
 }
 
-void Array::Sorting() {
+template <typename ItemType>
+void Array<ItemType>::Sorting() {
 	for (int s = (m_size / 2) + 1; s > 0; s /= 2) {
 		for (int i = s; i < m_size; ++i) {
 			for (int j = i - s; j >= 0 && m_array[j] > m_array[j + s]; j -= s) {
-				int temp = m_array[j];
+				 ItemType temp = m_array[j];
 				m_array[j] = m_array[j + s];
 				m_array[j + s] = temp;
 			}
@@ -153,7 +175,8 @@ void Array::Sorting() {
 	}
 }
 
-bool Array::Insert(int element, int index) {
+template <typename ItemType>
+bool Array<ItemType>::Insert(const ItemType& element, int index) {
 	if (index>=0 && index<=m_size) {
 		Array res((m_size + 1));
 
@@ -173,7 +196,8 @@ bool Array::Insert(int element, int index) {
 	}
 }
 
-bool Array::DeleteIndex(int index) {
+template <typename ItemType>
+bool Array<ItemType>::DeleteIndex(int index) {
 	if (index>0 &&index < m_size) {
 		Array res((m_size-1));
 
@@ -192,7 +216,8 @@ bool Array::DeleteIndex(int index) {
 	}
 }
 
-bool Array::DeleteValue(int element) {
+template <typename ItemType>
+bool Array<ItemType>::DeleteValue(const ItemType element) {
 	for (int i = 0; i < m_size; i++) {
 		if (m_array[i] == element) {
 			Array res((m_size - 1));
@@ -210,7 +235,8 @@ bool Array::DeleteValue(int element) {
 	return false;
 }
 
-void Array::DeleteAllValue(int element) {
+template <typename ItemType>
+void Array<ItemType>::DeleteAllValue(const ItemType element) {
 	for (int i = (m_size-1); i >=0; i--) {
 		if (m_array[i] == element) {
 			Array res(m_size - 1);
@@ -226,8 +252,9 @@ void Array::DeleteAllValue(int element) {
 	}
 }
 
-int Array::Max() {
-	int max = m_array[0];
+template <typename ItemType>
+ItemType Array<ItemType>::Max() const {
+	ItemType max = m_array[0];
 	for (int i = 1; i < m_size; i++) {
 		if (max < m_array[i])
 		{
@@ -237,8 +264,9 @@ int Array::Max() {
 	return max;
 }
 
-int Array::Min() {
-	int min = m_array[0];
+template <typename ItemType>
+ItemType Array<ItemType>::Min() const {
+	ItemType min = m_array[0];
 	for (int i = 1; i < m_size; i++) {
 		if (min > m_array[i])
 		{
@@ -248,7 +276,8 @@ int Array::Min() {
 	return min;
 }
 
-Array Array:: operator +(const int value)const
+template <typename ItemType>
+Array<ItemType> Array<ItemType>::operator +(const ItemType value)const
 {
 	Array tmp_Array(m_size + 1);
 	for (int i = 0; i < m_size; ++i)
@@ -259,7 +288,8 @@ Array Array:: operator +(const int value)const
 	return tmp_Array;
 }
 
-Array& Array:: operator+=(int value) {
+template <typename ItemType>
+Array<ItemType>& Array<ItemType>:: operator+=(const ItemType  &value) {
 	Array tmp = *this + value;
 	Swap(tmp);
 	return *this;
