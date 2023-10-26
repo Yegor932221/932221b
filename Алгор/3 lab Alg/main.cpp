@@ -5,9 +5,9 @@
 #include<vector>
 #include<fstream>
 #include<chrono>
-void Shell1(std::vector<int> &array);
-void Shell2(std::vector<int> &array);
-void Shell3(std::vector<int> &array);
+void ShellClassic(std::vector<int> &array);
+void ShellFrankLazarus(std::vector<int> &array);
+void ShellGonneBaezaYates(std::vector<int> &array);
 void CopyArrayFromFile(const char* name, std::vector<int> &arr);
 void InsertWithStep(std::vector<int>& arr, int s);
 bool ArrayCheck(std::vector<int> &arr);
@@ -16,13 +16,27 @@ bool ArrayCheck(std::vector<int> &arr);
 int main(){
 	for (int j = 0; j < 3; j++)
 	{
+		switch (j)
+		{
+		case 0:
+			std::cout << "\n" << "Sorting Time Shell Classic (n/2):" << "\n";
+			break;
+		case 1:
+			std::cout << "\n" << "Sorting Time Shell Frank & Lazarus ((n/2)+1):" << "\n";
+			break;
+		case 2:
+			std::cout << "\n" << "Sorting Time Shell Gonnet & Baeza-Yates((n*5 - 1) / 11):" << "\n";
+			break;
+		default:
+			break;
+		}
 			std::vector<int> arr;
-			FILE* mass;
-			float time = 0;
 			for (int range = 10; range <= 100'000; range *= 100)
 			{
 				for (int size = 10'000; size <= 1'000'000; size *= 10) 
 				{
+					float time = 0;
+					FILE* mass;
 					std::string name = "Shell" + std::to_string(size) + "_in_range_" + std::to_string(range) + ".txt";
 					const char* file = name.c_str();
 					fopen_s(&mass, file, "r");
@@ -37,15 +51,15 @@ int main(){
 					switch (j)
 					{
 						case 0:
-						Shell1(arr);
+						ShellClassic(arr);
 						break;
 
 						case 1:
-						Shell2(arr);
+						ShellFrankLazarus(arr);
 						break;
 
 						case 2:
-						Shell3(arr);
+						ShellGonneBaezaYates(arr);
 						break;
 
 						default:
@@ -59,41 +73,28 @@ int main(){
 					auto end = std::chrono::high_resolution_clock::now();
 					float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 					time += time1;
+					std::cout << size << " elements in range +/-" << range <<" time="<<time<<" millisecond" << std::endl;
+					_fcloseall();
 				}
 			}
-		std::cout << time;
-		switch (j)
-		{
-		case 0:
-			std::cout << "\n" << "Sorting Time Shell1 (n/2):" << time << "\n";
-			break;
-		case 1:
-			std::cout << "\n" << "Sorting Time Shell2 ((n/2)+1):" << time << "\n";
-			break;
-		case 2:
-			std::cout << "\n" << "Sorting Time Shell3 ((n*5 - 1) / 11):" << time << "\n";
-			break;
-		default:
-			break;
-		}
 	}
 	return 0;
 }
 
-void Shell1(std::vector<int> &array) {
+void ShellClassic(std::vector<int> &array) {
 	for (int s = array.size() / 2; s > 0; s /= 2) {
 		InsertWithStep(array, s);
 	}
 }
 
 
-void Shell2(std::vector<int> &array) {
+void ShellFrankLazarus(std::vector<int> &array) {
 	for (int s = (array.size() / 2)+1; s > 0; s /= 2) {
 		InsertWithStep(array, s);
 	}
 }
 
-void Shell3(std::vector<int> &array) {
+void ShellGonneBaezaYates(std::vector<int> &array) {
 	int s = array.size(),m;
 	for (; s > 0;) {
 		InsertWithStep(array, s);
