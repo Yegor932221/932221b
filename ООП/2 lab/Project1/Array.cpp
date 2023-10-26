@@ -254,6 +254,7 @@ void Array<ItemType>::DeleteAllValue(const ItemType element) {
 
 template <typename ItemType>
 ItemType Array<ItemType>::Max() const {
+	assert(m_size != 0);
 	ItemType max = m_array[0];
 	for (int i = 1; i < m_size; i++) {
 		if (max < m_array[i])
@@ -266,6 +267,7 @@ ItemType Array<ItemType>::Max() const {
 
 template <typename ItemType>
 ItemType Array<ItemType>::Min() const {
+	assert(m_size != 0);
 	ItemType min = m_array[0];
 	for (int i = 1; i < m_size; i++) {
 		if (min > m_array[i])
@@ -293,4 +295,30 @@ Array<ItemType>& Array<ItemType>:: operator+=(const ItemType  &value) {
 	Array tmp = *this + value;
 	Swap(tmp);
 	return *this;
+}
+
+template <typename ItemType>
+bool Array<ItemType>::operator ==(const Array& other)const
+{
+	if (this == &other)
+	{
+		return true;
+	}
+	if (m_size != other.m_size)
+	{
+		return false;
+	}
+	else
+	{
+		for (int i = 0; i < m_size; ++i)
+			if (m_array[i] != other.m_array[i])
+				return false;
+	}
+	return true;
+}
+
+template <typename ItemType>
+bool Array<ItemType>:: operator !=(const Array& other)const
+{
+	return !operator==(other);
 }

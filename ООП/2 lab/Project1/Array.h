@@ -56,7 +56,9 @@ public:
 
 	Array& operator+=(const ItemType& value);
 
-	
+	bool operator ==(const Array& other)const;
+
+	bool operator !=(const Array& other)const;
 private:
 	ItemType*m_array=nullptr;
 	int m_size=0;
