@@ -7,7 +7,7 @@
 #include<chrono>
 void ShellClassic(std::vector<int> &array);
 void ShellFrankLazarus(std::vector<int> &array);
-void ShellGonneBaezaYates(std::vector<int> &array);
+void ShellGonneBaezaYates(std::vector<int>& array);
 void CopyArrayFromFile(const char* name, std::vector<int> &arr);
 void InsertWithStep(std::vector<int>& arr, int s);
 bool ArrayCheck(std::vector<int> &arr);
@@ -33,9 +33,11 @@ int main(){
 			std::vector<int> arr;
 			for (int range = 10; range <= 100'000; range *= 100)
 			{
-				for (int size = 10'000; size <= 1'000'000; size *= 10) 
+				for (int size = 10'000; size <= 1'000'000; size *= 10)
 				{
 					float time = 0;
+					for (int k = 0; k < 3; k++) 
+					{
 					FILE* mass;
 					std::string name = "Shell" + std::to_string(size) + "_in_range_" + std::to_string(range) + ".txt";
 					const char* file = name.c_str();
@@ -50,31 +52,34 @@ int main(){
 					auto start = std::chrono::high_resolution_clock::now();
 					switch (j)
 					{
-						case 0:
+					case 0:
 						ShellClassic(arr);
 						break;
 
-						case 1:
+					case 1:
 						ShellFrankLazarus(arr);
 						break;
 
-						case 2:
+					case 2:
 						ShellGonneBaezaYates(arr);
 						break;
 
-						default:
+					default:
 						break;
 					}
+					auto end = std::chrono::high_resolution_clock::now();
 					if (ArrayCheck(arr) == 0)
 					{
 						std::cerr << "Don't sorted";
 						break;
 					}
-					auto end = std::chrono::high_resolution_clock::now();
 					float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 					time += time1;
-					std::cout << size << " elements in range +/-" << range <<" time="<<time<<" millisecond" << std::endl;
 					_fcloseall();
+					}
+
+					time =time/3;
+					std::cout << size << " elements in range +/-" << range << " time=" << time << " millisecond" << std::endl;
 				}
 			}
 	}
@@ -82,14 +87,15 @@ int main(){
 }
 
 void ShellClassic(std::vector<int> &array) {
-	for (int s = array.size() / 2; s > 0; s /= 2) {
-		InsertWithStep(array, s);
-	}
+	int step = array.size() / 2;
+	for (; step > 0; step /= 2)
+		InsertWithStep(array, step);
+
 }
 
 
 void ShellFrankLazarus(std::vector<int> &array) {
-	for (int s = (array.size() / 2)+1; s > 0; s /= 2) {
+	for (int s = (array.size() / 2) + 1; s > 0; s /= 2) {
 		InsertWithStep(array, s);
 	}
 }
