@@ -9,7 +9,7 @@ void ShellClassic(std::vector<int> &array);
 void ShellFrankLazarus(std::vector<int> &array);
 void ShellGonneBaezaYates(std::vector<int>& array);
 void CopyArrayFromFile(const char* name, std::vector<int> &arr);
-void InsertWithStep(std::vector<int>& arr, int s);
+void InsertWithStep(std::vector<int>& arr, int step);
 bool ArrayCheck(std::vector<int> &arr);
 
 
@@ -49,7 +49,7 @@ int main(){
 					CopyArrayFromFile(file, arr);
 					for (int k = 0; k < 3; k++)
 					{
-					auto start = std::chrono::high_resolution_clock::now();
+						auto start = std::chrono::high_resolution_clock::now();
 					switch (j)
 					{
 					case 0:
@@ -88,26 +88,26 @@ int main(){
 }
 
 void ShellClassic(std::vector<int> &array) {
-	int step = array.size() / 2;
-	for (; step > 0; step /= 2)
+	for (int step = array.size()/2 ; step > 0; step /= 2)
 		InsertWithStep(array, step);
 
 }
 
 
 void ShellFrankLazarus(std::vector<int> &array) {
-	for (int s = (array.size() / 2) + 1; s > 0; s /= 2) {
-		InsertWithStep(array, s);
+	for (int step = 2*(array.size() / 4) + 1; step > 0; step /= 2) {
+		InsertWithStep(array, step);
 	}
 }
 
 void ShellGonneBaezaYates(std::vector<int> &array) {
-	int s = array.size(),m;
-	for (; s > 0;) {
-		InsertWithStep(array, s);
-		if (s == 1)break;
-		m = (s*5 - 1) / 11;
-		s = std::max(m, 1);
+	int step = array.size(),m;
+	step = (step * 5 - 1) / 11;
+	for (; step > 0;) {
+		InsertWithStep(array, step);
+		if (step == 1)break;
+		m = (step*5 - 1) / 11;
+		step = std::max(m, 1);
 	}
 }
 
@@ -124,21 +124,20 @@ void CopyArrayFromFile(const char* name, std::vector<int> &arr) {
 	fin.close();
 }
 
-void InsertWithStep(std::vector<int>& arr, int s)
+void InsertWithStep(std::vector<int>& arr, int step)
 {
-	int i, j, k, key;
-	for (i = 0; i < s; i++)
+	for (int i = 0; i < step; i++)
 	{
-		for (j = i + s; j<arr.size(); j += s)
+		for (int j = i + step; j < arr.size(); j += step)
 		{
-			key = arr[j];
-			k = j - s;
+			int key = arr[j];
+			int k = j - step;
 			while (k >= 0 && arr[k] > key)
 			{
-				arr[k + s] = arr[k];
-				k -= s;
+				arr[k + step] = arr[k];
+				k -= step;
 			}
-			arr[k + s] = key;
+			arr[k + step] = key;
 		}
 	}
 }
