@@ -6,9 +6,9 @@
 #include<fstream>
 #include<chrono>
 void CopyArrayFromFile(const char* name, std::vector<int>& arr);
-void InsertWithStep(std::vector<int>& arr, int s, int n);
 bool ArrayCheck(std::vector<int>& arr);
-void CreateHeap(std::vector<int>& a);
+void CreateHeap(std::vector<int>& arr);
+void Sifting(std::vector<int>& arr, int size, int index);
 
 
 
@@ -61,25 +61,6 @@ void CopyArrayFromFile(const char* name, std::vector<int>& arr) {
 	fin.close();
 }
 
-void InsertWithStep(std::vector<int>& arr, int s, int n)
-{
-	int i, j, k, key;
-	for (i = n; i < s; i++)
-	{
-		for (j = i + s; j < arr.size(); j += s)
-		{
-			key = arr[j];
-			k = j - s;
-			while (k >= 0 && arr[k] > key)
-			{
-				arr[k + s] = arr[k];
-				k -= s;
-			}
-			arr[k + s] = key;
-		}
-	}
-}
-
 bool ArrayCheck(std::vector<int>& arr) {
 	for (int i = 0; i < arr.size() - 1; i++)
 	{
@@ -101,31 +82,31 @@ void HeapSort(const char* name, std::vector<int>& arr) {
 	}
 }
 
-void CreateHeap(std::vector<int>& a)
+void CreateHeap(std::vector<int>& arr)
 {
-	const int size = a.size();
-	for (int i = size / 2 - 1; i >= 0; i--)
-		Sifting(a, i);
+	int n = arr.size();
+	for (int i = n / 2 - 1; i >= 0; i--)
+		Sifting(arr,n, i);
 }
 
-void Sifting(std::vector<int>& arr, int index)
+void Sifting(std::vector<int>& arr,int size, int index)
 {
 	int flag = 1, int tmp = arr[index];
-	for(int descendant = 2 * index + 1;descendant < arr.size() && flag;)
+	for(int descendant = 2 * index + 1;descendant < size && flag;)
 	{
-		if ((descendant + 1) < arr.size())//check if the next descendant exists
+		if ((descendant + 1) < size)
 		{
-			if (arr[descendant + 1] > arr[descendant])//if the next descendant is larger than the previous one
-				descendant++;//then we take the index of the next descendant (right)
+			if (arr[descendant + 1] > arr[descendant])
+				descendant++;
 		}
-		if (arr[descendant] > tmp)//if descendant > tmp(parent) 
+		if (arr[descendant] > tmp)
 		{
-			arr[index] = arr[descendant];//then descendant falls into place parent
+			arr[index] = arr[descendant];
 			index = descendant;
 			descendant = 2 * index + 1;
 		}
 		else
-			flag = 0;//if its not happend ===> good
+			flag = 0;
 	}
 	arr[index] = tmp;
 }
