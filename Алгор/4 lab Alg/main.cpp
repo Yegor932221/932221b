@@ -6,6 +6,7 @@
 #include<fstream>
 #include<chrono>
 void CopyArrayFromFile(const char* name, std::vector<int>& arr);
+void HeapSort(std::vector<int>& arr);
 bool ArrayCheck(std::vector<int>& arr);
 void CreateHeap(std::vector<int>& arr);
 void Sifting(std::vector<int>& arr, int size, int index);
@@ -14,9 +15,9 @@ void Sifting(std::vector<int>& arr, int size, int index);
 
 int main() {
 		std::vector<int> arr;
-		for (int range = 10; range <= 100'000; range *= 100)
+		for (int range = 10; range <= 100000; range *= 100)
 		{
-			for (int size = 10'000; size <= 1'000'000; size *= 10)
+			for (int size = 10000; size <= 1000000; size *= 10)
 			{
 				float time = 0;
 				FILE* mass;
@@ -30,17 +31,22 @@ int main() {
 					exit(-1);
 				}
 				CopyArrayFromFile(file, arr);
-				auto start = std::chrono::high_resolution_clock::now();
-
-				if (ArrayCheck(arr) == 0)
-				{
-					std::cerr << "Don't sorted";
-					break;
+				for (int k = 3; k != 0; k--) {
+					auto start = std::chrono::high_resolution_clock::now();
+					HeapSort(arr);
+					auto end = std::chrono::high_resolution_clock::now();
+					float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+					if (!ArrayCheck(arr))
+					{
+						std::cerr << "Don't sorted";
+						break;
+					}
+						time += time1;
+					std::cout << size << " elements in range +/-" << range << " time=" << time1 << " millisecond" << std::endl << std::endl;
 				}
-				auto end = std::chrono::high_resolution_clock::now();
-				float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-				time += time1;
-				std::cout << size << " elements in range +/-" << range << " time=" << time << " millisecond" << std::endl;
+				time /= 3;
+				std::cout << size << " elements in range +/-" << range << " MidlTime=" << time << " millisecond" << std::endl << std::endl;
+				std::cout<< std::endl;
 				_fcloseall();
 			}
 		}
@@ -70,15 +76,12 @@ bool ArrayCheck(std::vector<int>& arr) {
 	return true;
 }
 
-void HeapSort(const char* name, std::vector<int>& arr) {
-	int i = (arr.size()/2)-1;
-	ShellClassic(arr, i);
-	for (int k = 0; k <= arr.size(); k++) {
-		for (int j = i * 2 + 1; j < arr.size();) {
-			if (j + 1 < arr.size()) break;
-			if()
-		}
-
+void HeapSort( std::vector<int>& arr) {
+	CreateHeap(arr);
+	for (int j = arr.size() - 1; j > 0; j--)
+	{
+		std::swap(arr[0], arr[j]);
+		Sifting(arr, j, 0);
 	}
 }
 
@@ -91,7 +94,7 @@ void CreateHeap(std::vector<int>& arr)
 
 void Sifting(std::vector<int>& arr,int size, int index)
 {
-	int flag = 1, int tmp = arr[index];
+	int flag = 1, tmp = arr[index];
 	for(int descendant = 2 * index + 1;descendant < size && flag;)
 	{
 		if ((descendant + 1) < size)
