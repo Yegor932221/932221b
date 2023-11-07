@@ -36,8 +36,6 @@ int main(){
 				for (int size = 10'000; size <= 1'000'000; size *= 10)
 				{
 					float time = 0;
-					for (int k = 0; k < 3; k++) 
-					{
 					FILE* mass;
 					std::string name = "Shell" + std::to_string(size) + "_in_range_" + std::to_string(range) + ".txt";
 					const char* file = name.c_str();
@@ -49,6 +47,8 @@ int main(){
 						exit(-1);
 					}
 					CopyArrayFromFile(file, arr);
+					for (int k = 0; k < 3; k++)
+					{
 					auto start = std::chrono::high_resolution_clock::now();
 					switch (j)
 					{
@@ -68,18 +68,19 @@ int main(){
 						break;
 					}
 					auto end = std::chrono::high_resolution_clock::now();
-					if (ArrayCheck(arr) == 0)
+					float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+					if (!ArrayCheck(arr))
 					{
 						std::cerr << "Don't sorted";
 						break;
 					}
-					float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+					std::cout << size << " elements in range +/-" << range << " time=" << time1 << " millisecond" << std::endl;
 					time += time1;
 					_fcloseall();
 					}
 
 					time =time/3;
-					std::cout << size << " elements in range +/-" << range << " time=" << time << " millisecond" << std::endl;
+					std::cout << std::endl << size << " elements in range +/-" << range << " MIDLtime=" << time << " millisecond" << std::endl << std::endl;
 				}
 			}
 	}
