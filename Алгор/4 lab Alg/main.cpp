@@ -8,7 +8,7 @@
 void CopyArrayFromFile(const char* name, std::vector<int>& arr);
 void InsertWithStep(std::vector<int>& arr, int s, int n);
 bool ArrayCheck(std::vector<int>& arr);
-void ShellClassic(std::vector<int>& array, int n);
+void CreateHeap(std::vector<int>& a);
 
 
 
@@ -101,9 +101,31 @@ void HeapSort(const char* name, std::vector<int>& arr) {
 	}
 }
 
-void ShellClassic(std::vector<int>& array, int n) {
-	int step = array.size() / 2;
-	for (; step > 0; step /= 2)
-		InsertWithStep(array, step, n);
+void CreateHeap(std::vector<int>& a)
+{
+	const int size = a.size();
+	for (int i = size / 2 - 1; i >= 0; i--)
+		Sifting(a, i);
+}
 
+void Sifting(std::vector<int>& arr, int index)
+{
+	int flag = 1, int tmp = arr[index];
+	for(int descendant = 2 * index + 1;descendant < arr.size() && flag;)
+	{
+		if ((descendant + 1) < arr.size())//check if the next descendant exists
+		{
+			if (arr[descendant + 1] > arr[descendant])//if the next descendant is larger than the previous one
+				descendant++;//then we take the index of the next descendant (right)
+		}
+		if (arr[descendant] > tmp)//if descendant > tmp(parent) 
+		{
+			arr[index] = arr[descendant];//then descendant falls into place parent
+			index = descendant;
+			descendant = 2 * index + 1;
+		}
+		else
+			flag = 0;//if its not happend ===> good
+	}
+	arr[index] = tmp;
 }
