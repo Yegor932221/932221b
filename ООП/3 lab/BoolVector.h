@@ -17,5 +17,13 @@ public:
 	BoolVector();
 	BoolVector (UI length, const bool value);
 	~BoolVector();
+	int BoolLenght();
+	BoolVector(const BoolVector& other);
+	void Set1(const int cell, const int pos_cell);
+	void Set0(const int cell, const int pos_cell);
+	BoolVector(const char* str);
+	void Swap(BoolVector& other);
+	BoolVector operator<<(const int count)const;
+
 };
 
