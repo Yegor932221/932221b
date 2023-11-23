@@ -25,5 +25,6 @@ public:
 	void Swap(BoolVector& other);
 	BoolVector operator<<(const int count)const;
 	BoolVector operator>>(const int count)const;
+	void Invers();
 };
 

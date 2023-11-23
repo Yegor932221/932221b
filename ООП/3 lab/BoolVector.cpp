@@ -99,7 +99,7 @@ BoolVector BoolVector::operator<<(const int count)const
 {
 	assert(count >= 0);
 	BoolVector other(*this);
-	if (count / m_cellSize > 0)
+	if (count / m_cellSize == 0)
 	{
 		other.m_cells[0] <<= count;
 		for (int i = 1; i < other.m_cellCount; i++)
@@ -165,7 +165,16 @@ BoolVector BoolVector::operator>>(const int count)const
 		mask |= other.m_cells[i];
 		mask <<= m_cellSize - count % m_cellSize;
 		other.m_cells[i + 1] |= mask;
-		other.m_cells[i] >>= count % m_cellSize;
+		other.m_cells[i] >>= count%m_cellSize;
 	}
 	return other;
+}
+
+void BoolVector::Invers()
+{
+	for (int i = 0; i < m_cellCount; i++){
+		m_cells[i] =~ m_cells[i];
+	}
+	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] >> m_insignificantRankCount;
+	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] << m_insignificantRankCount;
 }
