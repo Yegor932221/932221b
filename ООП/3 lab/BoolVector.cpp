@@ -57,7 +57,7 @@ void BoolVector::Set1(const int cell, const int pos_cell)
 {
 	assert(cell >= 0 || cell < m_cellCount || pos_cell < m_cellSize);
 	uint8_t mask = 1;
-	mask = mask << 7 - pos_cell;
+	mask = mask << (7 - pos_cell);
 	m_cells[cell] = m_cells[cell] | mask;
 }
 
@@ -115,7 +115,7 @@ BoolVector BoolVector::operator<<(const int count)const
 	{
 		for (int i = 0; i < other.m_cellCount; i++)
 		{
-			if (i + count / other.m_cellSize < other.m_cellCount)
+			if ((i + count)/other.m_cellSize<other.m_cellCount)
 			{
 				other.m_cells[i] = m_cells[i + (count / other.m_cellSize)];
 				other.m_cells[i + (count / other.m_cellSize)] = 0;
@@ -179,4 +179,10 @@ void BoolVector::Invers()
 	}
 	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] >> m_insignificantRankCount;
 	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] << m_insignificantRankCount;
+}
+
+void BoolVector::InversElement(const int cell, const int pos_cell) {
+	uint8_t mask = 1;
+	mask = mask << pos_cell;
+	m_cells[cell] = m_cells[cell] ^ mask;
 }
