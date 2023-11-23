@@ -29,5 +29,8 @@ public:
 	void InversElement(int index);
 	void Set1InRange(int index, const int range);
 	void Set0InRange(int index, const int range);
+	void Set1All();
+	void Set0All();
+	int Weight();
 };
 

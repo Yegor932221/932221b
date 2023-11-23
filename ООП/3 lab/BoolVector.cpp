@@ -206,3 +206,30 @@ void BoolVector::Set0InRange(int index, const int range)
 		Set0(index / m_cellSize, index % m_cellSize);
 	}
 }
+
+void BoolVector::Set1All()
+{
+	Set1InRange(0, m_length);
+}
+
+void BoolVector::Set0All()
+{
+	Set0InRange(0, m_length);
+}
+
+int BoolVector::Weight()
+{
+	int weight = 0;
+	for (int j = 0; j < m_cellSize; j++)
+	{
+		UI mask = 128;
+		mask >>= j;
+		for (int i = 0; i < m_cellCount; i++)
+		{
+			mask &= m_cells[i];
+			if (mask)
+			weight++;
+		}
+	}
+	return weight;
+}
