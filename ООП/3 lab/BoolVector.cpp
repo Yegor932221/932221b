@@ -167,6 +167,8 @@ BoolVector BoolVector::operator>>(const int count)const
 		other.m_cells[i + 1] |= mask;
 		other.m_cells[i] >>= count%m_cellSize;
 	}
+	other.m_cells[m_cellCount - 1] = other.m_cells[m_cellCount - 1] >> m_insignificantRankCount;
+	other.m_cells[m_cellCount - 1] = other.m_cells[m_cellCount - 1] << m_insignificantRankCount;
 	return other;
 }
 
