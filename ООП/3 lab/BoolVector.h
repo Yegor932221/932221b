@@ -26,6 +26,8 @@ public:
 	BoolVector operator<<(const int count)const;
 	BoolVector operator>>(const int count)const;
 	void Invers();
-	void InversElement(const int cell, const int pos_cell);
+	void InversElement(int index);
+	void Set1InRange(int index, const int range);
+	void Set0InRange(int index, const int range);
 };
 

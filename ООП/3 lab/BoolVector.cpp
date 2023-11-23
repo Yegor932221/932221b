@@ -181,8 +181,28 @@ void BoolVector::Invers()
 	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] << m_insignificantRankCount;
 }
 
-void BoolVector::InversElement(const int cell, const int pos_cell) {
+void BoolVector::InversElement(int index) {
 	uint8_t mask = 1;
-	mask = mask << pos_cell;
-	m_cells[cell] = m_cells[cell] ^ mask;
+	mask = mask << (index%m_cellSize);
+	m_cells[(index/m_cellSize)+1] = m_cells[(index / m_cellSize) + 1] ^ mask;
+}
+
+void BoolVector::Set1InRange(int index, const int range)
+{
+	assert(index >= 0 || (index < m_cellCount && range < m_length));
+
+	for (int i = 1; i <= range; i++,index++)
+	{
+		Set1(index / m_cellSize, index % m_cellSize);
+	}
+}
+
+void BoolVector::Set0InRange(int index, const int range)
+{
+	assert(index >= 0 || (index < m_cellCount && range <= m_length));
+
+	for (int i = 1; i <= range; i++, index++)
+	{
+		Set0(index / m_cellSize, index % m_cellSize);
+	}
 }
