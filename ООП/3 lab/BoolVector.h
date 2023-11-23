@@ -24,6 +24,6 @@ public:
 	BoolVector(const char* str);
 	void Swap(BoolVector& other);
 	BoolVector operator<<(const int count)const;
-
+	BoolVector operator>>(const int count)const;
 };
 
