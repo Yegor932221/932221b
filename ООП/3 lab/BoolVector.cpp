@@ -234,3 +234,8 @@ int BoolVector::Weight()
 	return weight;
 }
 
+BoolVector::BoolRank::BoolRank(UC* cell, const int mask)
+{
+	m_cell = cell;
+	m_mask =m_mask >> mask;
+}
