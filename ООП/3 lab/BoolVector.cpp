@@ -317,6 +317,24 @@ BoolVector BoolVector::operator ~()const
 	return copy;
 }
 
-BoolVector BoolVector::operator =(const BoolVector& other)const {
-	return other;
+BoolVector& BoolVector::operator=(const BoolVector& other)
+{
+	if (m_cells == other.m_cells)
+		return *this;
+
+	if (m_cellCount != other.m_cellCount)
+	{
+		m_cellCount = other.m_cellCount;
+		delete[] m_cells;
+		m_cells = new UC[m_cellCount];
+	}
+
+	for (int i = 0; i < m_cellCount; i++)
+	{
+		m_cells[i] = other.m_cells[i];
+	}
+
+	m_length = other.m_length;
+	m_insignificantRankCount = other.m_insignificantRankCount;
+	return *this;
 }
