@@ -244,3 +244,68 @@ BoolVector::BoolRank BoolVector::operator[](const int index)
 {
 	return BoolRank(m_cells + index / m_cellSize, index % m_cellSize);
 }
+
+BoolVector BoolVector::operator&(const BoolVector& other)const
+{
+	assert(m_length == other.m_length);
+	BoolVector tmp(*this);
+	tmp &= other;
+	return tmp;
+}
+
+BoolVector BoolVector::operator&=(const BoolVector& other) {
+	assert(m_length == other.m_length);
+	for (int i = 0; i < m_cellCount; i++)
+	{
+		m_cells[i] &= other.m_cells[i];
+	}
+	return *this;
+}
+
+BoolVector BoolVector::operator^(const BoolVector& other)const
+{
+	assert(m_length == other.m_length);
+	BoolVector tmp(*this);
+	tmp ^= other;
+	return tmp;
+}
+
+BoolVector BoolVector::operator^=(const BoolVector& other){
+	assert(m_length == other.m_length);
+
+	for (int i = 0; i < m_cellCount; i++)
+	{
+		m_cells[i] ^= other.m_cells[i];
+	}
+	return *this;
+}
+
+BoolVector BoolVector::operator|(const BoolVector& other)const
+{
+	assert(m_length == other.m_length);
+	BoolVector tmp(*this);
+	tmp |= other;
+	return tmp;
+}
+
+BoolVector BoolVector::operator|=(const BoolVector& other) {
+	assert(m_length == other.m_length);
+
+	for (int i = 0; i < m_cellCount; i++)
+	{
+		m_cells[i] |= other.m_cells[i];
+	}
+	return *this;
+}
+
+BoolVector BoolVector::operator >>=(const int count)
+{
+	*this = *this >> count;
+	return *this;
+}
+
+BoolVector BoolVector::operator <<=(const int count)
+{
+	*this = *this << count;
+	return *this;
+}
