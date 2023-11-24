@@ -34,6 +34,7 @@ public:
 	int Weight();
 
 	class BoolRank;
+	BoolVector::BoolRank operator[](const int index);
 };
 
 class BoolVector::BoolRank

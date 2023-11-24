@@ -239,3 +239,8 @@ BoolVector::BoolRank::BoolRank(UC* cell, const int mask)
 	m_cell = cell;
 	m_mask =m_mask >> mask;
 }
+
+BoolVector::BoolRank BoolVector::operator[](const int index)
+{
+	return BoolRank(m_cells + index / m_cellSize, index % m_cellSize);
+}
