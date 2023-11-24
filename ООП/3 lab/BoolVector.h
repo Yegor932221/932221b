@@ -32,5 +32,13 @@ public:
 	void Set1All();
 	void Set0All();
 	int Weight();
+	class BoolRank;
 };
 
+class BoolVector::BoolRank
+{
+private:
+	uint8_t* m_cell = nullptr;
+	uint8_t m_mask = 1 << 7;
+public:
+};

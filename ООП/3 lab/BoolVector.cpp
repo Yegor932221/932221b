@@ -233,3 +233,4 @@ int BoolVector::Weight()
 	}
 	return weight;
 }
+
