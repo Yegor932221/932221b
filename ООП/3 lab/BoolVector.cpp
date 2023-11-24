@@ -309,3 +309,14 @@ BoolVector BoolVector::operator <<=(const int count)
 	*this = *this << count;
 	return *this;
 }
+
+BoolVector BoolVector::operator ~()const
+{
+	BoolVector copy(*this);
+	copy.Invers();
+	return copy;
+}
+
+BoolVector BoolVector::operator =(const BoolVector& other)const {
+	return other;
+}

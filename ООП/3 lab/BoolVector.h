@@ -38,12 +38,17 @@ public:
 
 	BoolVector operator&(const BoolVector& other)const;
 	BoolVector operator&=(const BoolVector& other);
+
 	BoolVector operator^(const BoolVector& other)const;
 	BoolVector operator^=(const BoolVector& other);
+
 	BoolVector operator|(const BoolVector& other)const;
 	BoolVector operator|=(const BoolVector& other);
+
 	BoolVector operator<<=(const int count);
 	BoolVector operator>>=(const int count);
+	BoolVector operator ~()const;
+	BoolVector operator =(const BoolVector& other)const;
 };
 
 class BoolVector::BoolRank
