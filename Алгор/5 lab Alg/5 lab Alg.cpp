@@ -7,7 +7,7 @@
 #include<chrono>
 void CopyArrayFromFile(const char* name, std::vector<int>& arr);
 bool ArrayCheck(std::vector<int>& arr);
-void HoarSort(std::vector<int>& arr, int xl, int xr);
+void HoarSort(std::vector<int>& arr, int l, int r);
 
 
 int main() {
@@ -30,7 +30,7 @@ int main() {
 			CopyArrayFromFile(file, arr);
 			for (int k = 3; k != 0; k--) {
 				auto start = std::chrono::high_resolution_clock::now();
-				HoarSort(arr,0,arr.size()-1);
+				HoarSort(arr,0,(arr.size()-1));
 				auto end = std::chrono::high_resolution_clock::now();
 				float time1 = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 				if (!ArrayCheck(arr))
@@ -71,22 +71,21 @@ bool ArrayCheck(std::vector<int>& arr) {
 	return true;
 }
 
-void HoarSort(std::vector<int>& arr, int xl, int xr) {
-	int l = 0, r = arr.size(),i,j,xm;
-	if (l >= r || xl == xr)
+void HoarSort(std::vector<int>& arr, int l, int r) {
+	if (l >= r)
 		return;
-	i = l;
-	j = r;
-	xm = (xl + xr) / 2;
+	int i = l;
+	int j = r;
+	int x = arr[(l+r)/2	];
 	while (i <= j) {
-		while (i <= j || arr[i] < xm)i++;
-		while (j >= i || arr[j] >= xm)j--;
-		if (i < j) {
+		while (arr[i] < x) i++;
+			while (arr[j] > x) j--;
+		if (i <= j) {
 			std::swap(arr[i], arr[j]);
 			i++;
 			j--;
-		}
+		}		
 	}
-	HoarSort(arr, xl, j);
-	HoarSort(arr, i, xr);
+	HoarSort(arr, l, j);
+	HoarSort(arr, i, r);
 }
