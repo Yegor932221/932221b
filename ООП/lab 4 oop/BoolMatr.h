@@ -14,6 +14,10 @@ public:
 	~BoolMatr();
 
 	BoolMatr(const BoolMatr& other);
+
+	int GetCountColums();
+
+	int GetCountRows();
 private:
 	BoolVector* m_bool;
 	int m_columns;

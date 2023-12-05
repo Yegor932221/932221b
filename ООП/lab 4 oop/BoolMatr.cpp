@@ -55,3 +55,12 @@ BoolMatr::BoolMatr(const BoolMatr& other)
 		m_bool[i] = other.m_bool[i];
 	}
 }
+
+int BoolMatr::GetCountColums() {
+	return m_columns;
+}
+
+int BoolMatr::GetCountRows() {
+	return m_rows;
+}
+
