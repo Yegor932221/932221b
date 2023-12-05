@@ -7,7 +7,7 @@ class BoolMatr
 public:
 	BoolMatr();
 
-	BoolMatr(int columns, int rows, bool value);
+	BoolMatr(int colums, int rows, bool value);
 
 	BoolMatr(char** matrix, int rows);
 
@@ -15,12 +15,26 @@ public:
 
 	BoolMatr(const BoolMatr& other);
 
-	int GetCountColums();
+	int GetCountColums() const;
 
-	int GetCountRows();
+	int GetCountRows() const;
+
+	void Swap( BoolMatr& other);
+
+	BoolVector& operator[](const int i);
+
+	const BoolVector& operator[](const int i) const;
+
+	friend std::istream& operator >>(std::istream& stream, BoolMatr& matrix);
+
+	friend std::ostream& operator <<(std::ostream& stream, const BoolMatr& matrix);
+
+	int Weight()const;
+
+
 private:
 	BoolVector* m_bool;
-	int m_columns;
+	int m_colums;
 	int m_rows;
 };
 

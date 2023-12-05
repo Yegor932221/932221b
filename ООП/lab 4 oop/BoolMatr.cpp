@@ -7,23 +7,23 @@
 
 BoolMatr::BoolMatr()
 {
-	m_columns = 8;
+	m_colums = 8;
 	m_rows = 1;
 	m_bool = new BoolVector[m_rows];
-	BoolVector bool1(m_columns, 1);
+	BoolVector bool1(m_colums, 1);
 	m_bool[0] = bool1;
 }
 
-BoolMatr::BoolMatr( int columns, int rows, bool value)
+BoolMatr::BoolMatr( int colums, int rows, bool value)
 {
-	assert(columns > 0 || rows > 0);
+	assert(colums > 0 || rows > 0);
 
 	m_bool = new BoolVector[m_rows = rows];
 
-	m_columns = columns;
+	m_colums = colums;
 	for (int i = 0; i < m_rows; i++)
 	{
-		BoolVector bool1(columns, value);
+		BoolVector bool1(colums, value);
 		m_bool[i] = bool1;
 	}
 }
@@ -31,7 +31,7 @@ BoolMatr::BoolMatr( int columns, int rows, bool value)
 BoolMatr::BoolMatr(char** matrix, int rows)
 {
 	assert(rows > 0);
-	m_columns = strlen(matrix[0]);
+	m_colums = strlen(matrix[0]);
 	m_rows = rows;
 	m_bool = new BoolVector[m_rows];
 	for (int i = 0; i < m_rows; i++)
@@ -48,7 +48,7 @@ BoolMatr::~BoolMatr()
 
 BoolMatr::BoolMatr(const BoolMatr& other)
 {
-	BoolMatr(other.m_columns, other.m_rows, false);
+	BoolMatr(other.m_colums, other.m_rows, false);
 	m_bool = new BoolVector[m_rows];
 	for (int i = 0; i < m_rows; i++)
 	{
@@ -56,11 +56,51 @@ BoolMatr::BoolMatr(const BoolMatr& other)
 	}
 }
 
-int BoolMatr::GetCountColums() {
-	return m_columns;
+int BoolMatr::GetCountColums() const{
+	return m_colums;
 }
 
-int BoolMatr::GetCountRows() {
+int BoolMatr::GetCountRows() const{
 	return m_rows;
 }
 
+void BoolMatr::Swap( BoolMatr& other) {
+	std::swap(m_rows, other.m_rows);
+	std::swap(m_colums, other.m_colums);
+	std::swap(m_bool, other.m_bool);
+}
+
+BoolVector& BoolMatr::operator[](const int i)
+{
+	assert(i >= 0 || i < m_rows);
+	return m_bool[i];
+}
+
+const	BoolVector& BoolMatr::operator[](const int i) const
+{
+	assert(i >= 0 || i < m_rows);
+	return m_bool[i];
+}
+
+std::istream& operator >>(std::istream& stream, BoolMatr& matrix) {
+	for (int i = 0; i < matrix.GetCountColums(); i++) {
+		stream >> matrix[i];
+	}
+	return stream;
+}
+
+std::ostream& operator <<(std::ostream& stream,const BoolMatr& matrix) {
+	for (int i = 0; i < matrix.GetCountColums(); i++) {
+		stream << matrix[i];
+	}
+	return stream;
+}
+
+int BoolMatr::Weight()const {
+	int weight=0;
+	for (int i = 0; i < m_rows; i++)
+	{
+		weight+=m_bool[i].Weight();
+	}
+	return weight;
+}
