@@ -1,6 +1,7 @@
 #pragma once
 #include<stdint.h>
 #include<iostream>
+
 class BoolVector
 {
 	using UI = unsigned int;
@@ -15,7 +16,7 @@ private:
 
 public:
 	BoolVector();
-	BoolVector (UI length, const bool value);
+	BoolVector(UI length, const bool value);
 	~BoolVector();
 	int BoolLenght();
 	BoolVector(const BoolVector& other);
