@@ -48,6 +48,22 @@ public:
 	void Set0InRange(int i, int j, int k);
 
 	void Set1InRange(int i, int j, int k);
+
+	BoolMatr& operator=(const BoolMatr& other);
+
+	BoolMatr operator&(const BoolMatr& other)const;
+
+	BoolMatr operator&=(const BoolMatr& other);
+
+	BoolMatr operator|(const BoolMatr& other)const;
+
+	BoolMatr operator|=(const BoolMatr& other);
+
+	BoolMatr operator^(const BoolMatr& other)const;
+
+	BoolMatr operator^=(const BoolMatr& other);
+
+	BoolMatr operator~();
 private:
 	BoolVector* m_bool;
 	int m_columns;

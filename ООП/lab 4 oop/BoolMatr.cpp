@@ -145,6 +145,7 @@ void BoolMatr::Set1(int i, int j) {
 }
 
 void BoolMatr::Set0InRange(int i, int j, int k) {
+	assert(i >= 0 && i < m_columns && j >= 0 && j < m_rows && (k + i) < m_columns);
 	for (int f = 0; f < k; f++)
 	m_bool[j][i+f] = 0;
 }
@@ -155,3 +156,85 @@ void BoolMatr::Set1InRange(int i, int j, int k) {
 	m_bool[j][i+f] = 1;
 }
 
+BoolMatr& BoolMatr::operator=(const BoolMatr& other)
+{
+	if (m_bool == other.m_bool)
+		return *this;
+
+	if (m_rows != other.m_rows)
+	{
+		m_rows = other.m_rows;
+		delete[] m_bool;
+		m_bool = new BoolVector[m_rows];
+	}
+
+	m_columns = other.m_columns;
+	for (int i = 0; i < m_rows; i++)
+	{
+		m_bool[i] = other.m_bool[i];
+	}
+	return *this;
+}
+
+BoolMatr BoolMatr::operator&(const BoolMatr& other)const
+{
+	assert(m_rows == other.m_rows && m_columns == other.m_columns);
+	BoolMatr answer(*this);
+	for (int i = 0; i < m_rows; i++)
+	{
+		answer.m_bool[i] &= other.m_bool[i];
+	}
+	return answer;
+}
+
+BoolMatr BoolMatr::operator&=(const BoolMatr& other)
+{
+	BoolMatr answer = *this & other;
+	Swap(answer);
+	return *this;
+}
+
+BoolMatr BoolMatr::operator|(const BoolMatr& other)const
+{
+	assert(m_rows == other.m_rows && m_columns == other.m_columns);
+	BoolMatr answer(*this);
+	for (int i = 0; i < m_rows; i++)
+	{
+		answer.m_bool[i] |= other.m_bool[i];
+	}
+	return answer;
+}
+
+BoolMatr BoolMatr::operator|=(const BoolMatr& other)
+{
+	BoolMatr answer = *this | other;
+	Swap(answer);
+	return *this;
+}
+
+BoolMatr BoolMatr::operator^(const BoolMatr& other)const
+{
+	assert(m_rows == other.m_rows && m_columns == other.m_columns);
+	BoolMatr answer(*this);
+	for (int i = 0; i < m_rows; i++)
+	{
+		answer.m_bool[i] ^= other.m_bool[i];
+	}
+	return answer;
+}
+
+BoolMatr BoolMatr::operator^=(const BoolMatr& other)
+{
+	BoolMatr answer = *this ^ other;
+	Swap(answer);
+	return *this;
+}
+
+BoolMatr BoolMatr::operator~() {
+	BoolMatr answer = *this;
+	for (int i = 0; i < m_rows; i++)
+	{
+		answer.m_bool[i].Invers();
+	}
+	return answer;
+}
