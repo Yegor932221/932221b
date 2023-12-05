@@ -341,3 +341,62 @@ BoolVector& BoolVector::operator=(const BoolVector& other)
 	m_insignificantRankCount = other.m_insignificantRankCount;
 	return *this;
 }
+
+std::istream& operator >>(std::istream& stream, BoolVector& vector) {
+	char* str = new char[vector.BoolLenght()];
+	for (int i = 0; i < vector.BoolLenght(); i++)
+	{
+		stream >> str[i];
+	}
+	for (int i = 0; i < vector.BoolLenght(); i++)
+	{
+		if (str[i] != '0')
+			vector[i] = 1;
+		else
+			vector[i] = 0;
+	}
+	delete[]str;
+	return stream;
+}
+
+std::ostream& operator <<(std::ostream& stream,const BoolVector& vector)
+{
+	stream << "[";
+	for (int j = 0; j < vector.m_length + vector.m_insignificantRankCount; j++)
+	{
+		if (j % 8 == 0 && j != 0)
+			std::cout << "][";
+		std::cout << (bool)vector[j] << " ";
+	}
+	stream << "]" << std::endl;
+	return stream;
+}
+
+BoolVector::BoolRank& BoolVector::BoolRank::operator=(const BoolRank& other) {
+	operator=((bool)other);
+	return *this;
+}
+
+BoolVector::BoolRank& BoolVector::BoolRank::operator=(const bool value)
+{
+	if (value == 0)
+		(*m_cell) &= ~m_mask;
+	else
+		(*m_cell) |= m_mask;
+	return *this;
+}
+
+BoolVector::BoolRank::operator bool() const
+{
+	uint8_t copy_mask = m_mask;
+	copy_mask &= *m_cell;
+	if (copy_mask == m_mask)
+		return true;
+	else
+		return false;
+}
+
+const BoolVector::BoolRank BoolVector::operator[](const int index)const
+{
+	return BoolRank(m_cells + index / m_cellSize, index % m_cellSize);
+}

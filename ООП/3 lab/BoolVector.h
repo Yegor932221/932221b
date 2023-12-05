@@ -33,13 +33,14 @@ public:
 	void Set1All();
 	void Set0All();
 	int Weight();
-
 	class BoolRank;
+
 	BoolVector::BoolRank operator[](const int index);
+	const BoolVector::BoolRank operator[](const int index)const;
 
 	BoolVector operator&(const BoolVector& other)const;
 	BoolVector operator&=(const BoolVector& other);
-
+		
 	BoolVector operator^(const BoolVector& other)const;
 	BoolVector operator^=(const BoolVector& other);
 
@@ -52,6 +53,7 @@ public:
 	BoolVector operator ~()const;
 
 	BoolVector& operator=(const BoolVector& other);
+	friend	std::ostream& operator <<(std::ostream& stream, const BoolVector& vector);
 };
 
 class BoolVector::BoolRank
@@ -61,4 +63,9 @@ private:
 	uint8_t m_mask = 1 << 7;
 public:
 	BoolRank(UC* cell, const int mask);
+	BoolRank& operator=(const BoolRank& other);
+	BoolRank& operator=(const bool value);
+	operator bool() const;
 };
+
+std::istream& operator >>(std::istream& stream, BoolVector& vector);
