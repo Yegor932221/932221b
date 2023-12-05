@@ -4,7 +4,16 @@
 
 class BoolMatr
 {
+public:
+	BoolMatr();
 
+	BoolMatr(int columns, int rows, bool value);
+
+	BoolMatr(char** matrix, int rows);
+
+	~BoolMatr();
+
+	BoolMatr(const BoolMatr& other);
 private:
 	BoolVector* m_bool;
 	int m_columns;

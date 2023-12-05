@@ -127,10 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\3 lab\BoolVector.h" />
     <ClInclude Include="BoolMatr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\3 lab\BoolVector.cpp" />
     <ClCompile Include="BoolMatr.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
