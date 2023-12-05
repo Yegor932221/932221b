@@ -5,7 +5,7 @@ int main() {
 	int a = 5, b = 7;
 	BoolMatr second_matr(a, b, true);
 	BoolMatr third(matr);
-	a=third.GetCountColums();
+	a=third.GetCountColumns();
 	b = second_matr.GetCountRows();
 
 }

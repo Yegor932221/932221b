@@ -15,7 +15,7 @@ public:
 
 	BoolMatr(const BoolMatr& other);
 
-	int GetCountColums() const;
+	int GetCountColumns() const;
 
 	int GetCountRows() const;
 
@@ -31,10 +31,26 @@ public:
 
 	int Weight()const;
 
+	BoolVector Matr—onjunction() const;
 
+	BoolVector MatrDisjunction()const;
+
+	int WeightRow(int j)const;
+
+	void InversElement(int i, int j);
+
+	void InversElementsInRange(int i, int j, int k);
+
+	void Set0(int i, int j);
+
+	void Set1(int i, int j);
+
+	void Set0InRange(int i, int j, int k);
+
+	void Set1InRange(int i, int j, int k);
 private:
 	BoolVector* m_bool;
-	int m_colums;
+	int m_columns;
 	int m_rows;
 };
 
