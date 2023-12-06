@@ -18,7 +18,7 @@ public:
 	BoolVector();
 	BoolVector(UI length, const bool value);
 	~BoolVector();
-	int BoolLenght();
+	int Lenght();
 	BoolVector(const BoolVector& other);
 	void Set1(const int cell, const int pos_cell);
 	void Set0(const int cell, const int pos_cell);
@@ -26,13 +26,14 @@ public:
 	void Swap(BoolVector& other);
 	BoolVector operator<<(const int count)const;
 	BoolVector operator>>(const int count)const;
-	void Invers();
-	void InversElement(int index);
+	void Invert();
+	void InvertElement(int index);	
 	void Set1InRange(int index, const int range);
 	void Set0InRange(int index, const int range);
 	void Set1All();
 	void Set0All();
 	int Weight();
+
 	class BoolRank;
 
 	BoolVector::BoolRank operator[](const int index);

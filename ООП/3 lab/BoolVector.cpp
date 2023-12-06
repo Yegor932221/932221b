@@ -39,7 +39,7 @@ BoolVector:: ~BoolVector()
 	delete[] m_cells;
 }
 
-int BoolVector::BoolLenght()
+int BoolVector::Lenght()
 {
 	return m_length;
 }
@@ -107,7 +107,7 @@ BoolVector BoolVector::operator<<(const int count)const
 		other.m_cells[0] <<= count;
 		for (int i = 1; i < other.m_cellCount; i++)
 		{
-			UI mask = 0;
+			UI mask = 0;		
 			mask |= other.m_cells[i];
 			mask >>= m_cellSize - count;
 			other.m_cells[i - 1] |= mask;
@@ -118,8 +118,8 @@ BoolVector BoolVector::operator<<(const int count)const
 	{
 		for (int i = 0; i < other.m_cellCount; i++)
 		{
-			if ((i + count) / other.m_cellSize < other.m_cellCount)
-			{
+			if (i + count/ other.m_cellSize < other.m_cellCount)
+			{	
 				other.m_cells[i] = m_cells[i + (count / other.m_cellSize)];
 				other.m_cells[i + (count / other.m_cellSize)] = 0;
 			}
@@ -139,8 +139,8 @@ BoolVector BoolVector::operator<<(const int count)const
 		}
 	}
 
-	other.m_cells[m_cellCount - 1] = other.m_cells[m_cellCount - 1] >> m_insignificantRankCount;
-	other.m_cells[m_cellCount - 1] = other.m_cells[m_cellCount - 1] << m_insignificantRankCount;
+	other.m_cells[m_cellCount - 1] >>= m_insignificantRankCount;
+	other.m_cells[m_cellCount - 1] <<= m_insignificantRankCount;
 	return other;
 }
 
@@ -175,7 +175,7 @@ BoolVector BoolVector::operator>>(const int count)const
 	return other;
 }
 
-void BoolVector::Invers()
+void BoolVector::Invert()
 {
 	for (int i = 0; i < m_cellCount; i++) {
 		m_cells[i] = ~m_cells[i];
@@ -184,7 +184,7 @@ void BoolVector::Invers()
 	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] << m_insignificantRankCount;
 }
 
-void BoolVector::InversElement(int index) {
+void BoolVector::InvertElement(int index) {
 	uint8_t mask = 1;
 	mask = mask << (index % m_cellSize);
 	m_cells[(index / m_cellSize) + 1] = m_cells[(index / m_cellSize) + 1] ^ mask;
@@ -225,7 +225,7 @@ int BoolVector::Weight()
 	int weight = 0;
 	for (int j = 0; j < m_cellSize; j++)
 	{
-		UI mask = 128;
+		UC mask = 128;
 		mask >>= j;
 		for (int i = 0; i < m_cellCount; i++)
 		{
@@ -245,6 +245,7 @@ BoolVector::BoolRank::BoolRank(UC* cell, const int mask)
 
 BoolVector::BoolRank BoolVector::operator[](const int index)
 {
+	assert(index>=0);
 	return BoolRank(m_cells + index / m_cellSize, index % m_cellSize);
 }
 
@@ -316,7 +317,7 @@ BoolVector BoolVector::operator <<=(const int count)
 BoolVector BoolVector::operator ~()const
 {
 	BoolVector copy(*this);
-	copy.Invers();
+	copy.Invert();
 	return copy;
 }
 
@@ -341,14 +342,14 @@ BoolVector& BoolVector::operator=(const BoolVector& other)
 	m_insignificantRankCount = other.m_insignificantRankCount;
 	return *this;
 }
-
 std::istream& operator >>(std::istream& stream, BoolVector& vector) {
-	char* str = new char[vector.BoolLenght()];
-	for (int i = 0; i < vector.BoolLenght(); i++)
+	char* str = new char[vector.Lenght()];
+	for (int i = 0; i < vector.Lenght(); i++)
 	{
 		stream >> str[i];
+
 	}
-	for (int i = 0; i < vector.BoolLenght(); i++)
+	for (int i = 0; i < vector.Lenght(); i++)
 	{
 		if (str[i] != '0')
 			vector[i] = 1;
@@ -388,9 +389,7 @@ BoolVector::BoolRank& BoolVector::BoolRank::operator=(const bool value)
 
 BoolVector::BoolRank::operator bool() const
 {
-	uint8_t copy_mask = m_mask;
-	copy_mask &= *m_cell;
-	if (copy_mask == m_mask)
+	if (*m_cell & m_mask)
 		return true;
 	else
 		return false;
@@ -398,5 +397,6 @@ BoolVector::BoolRank::operator bool() const
 
 const BoolVector::BoolRank BoolVector::operator[](const int index)const
 {
+	assert(index>=0);
 	return BoolRank(m_cells + index / m_cellSize, index % m_cellSize);
-}
+}	
