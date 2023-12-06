@@ -90,7 +90,7 @@ std::istream& operator >>(std::istream& stream, BoolMatr& matrix) {
 }
 
 std::ostream& operator <<(std::ostream& stream,const BoolMatr& matrix) {
-	for (int i = 0; i < matrix.GetCountColumns(); i++) {
+	for (int i = 0; i < matrix.GetCountRows(); i++) {
 		stream << matrix[i];
 	}
 	return stream;
@@ -127,13 +127,13 @@ int BoolMatr::WeightRow(int j)const {
 	return m_bool[j].Weight();
 }
 
-void BoolMatr::InversElement(int i, int j) {
-	m_bool[j].InversElement(i);
+void BoolMatr::InvertElement(int i, int j) {
+	m_bool[j].InvertElement(i);
 }
 
-void BoolMatr::InversElementsInRange(int i, int j,int k) {
+void BoolMatr::InvertElementsInRange(int i, int j,int k) {
 	for(int f=0;f<k;f++)
-	m_bool[j].InversElement(i+f);
+	m_bool[j].InvertElement(i+f);
 }
 
 void BoolMatr::Set0(int i, int j) {
@@ -234,7 +234,7 @@ BoolMatr BoolMatr::operator~() {
 	BoolMatr answer = *this;
 	for (int i = 0; i < m_rows; i++)
 	{
-		answer.m_bool[i].Invers();
+		answer.m_bool[i].Invert();
 	}
 	return answer;
 }

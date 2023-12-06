@@ -37,9 +37,9 @@ public:
 
 	int WeightRow(int j)const;
 
-	void InversElement(int i, int j);
+	void InvertElement(int i, int j);
 
-	void InversElementsInRange(int i, int j, int k);
+	void InvertElementsInRange(int i, int j, int k);
 
 	void Set0(int i, int j);
 
