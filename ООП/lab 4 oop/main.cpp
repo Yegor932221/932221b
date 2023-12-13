@@ -18,4 +18,5 @@ int main() {
 
 	second_matr.MatrÑonjunction();
 	matr3 = second_matr;
+	return 0;
 }

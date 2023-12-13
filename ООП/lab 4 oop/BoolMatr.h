@@ -37,17 +37,13 @@ public:
 
 	int WeightRow(int j)const;
 
-	void InvertElement(int i, int j);
+	void InvertElement(int row, int col);
 
-	void InvertElementsInRange(int i, int j, int k);
+	void InvertElementsInRange(int row, int col, int count);
 
-	void Set0(int i, int j);
+	void Set(int row, int col, bool value);
 
-	void Set1(int i, int j);
-
-	void Set0InRange(int i, int j, int k);
-
-	void Set1InRange(int i, int j, int k);
+	void SetInRange(int row, int col, int count, bool value);
 
 	BoolMatr& operator=(const BoolMatr& other);
 
@@ -63,9 +59,9 @@ public:
 
 	BoolMatr operator^=(const BoolMatr& other);
 
-	BoolMatr operator~();
+	BoolMatr operator~() const;
 private:
-	BoolVector* m_bool;
+	BoolVector* m_matrix;
 	int m_columns;
 	int m_rows;
 };
