@@ -1,21 +1,23 @@
-#include<iostream>
-#include<assert.h>
-#include<stdint.h>
-#include<string.h>
 #include<string>
+
 #include "BoolVector.h"
 
 int main()
 {
 	BoolVector v0;
-	BoolVector v1(100, 1);
+	BoolVector v1(76, 1);
 	for (int i = 0; i <= v1.Lenght(); ++i) {
 		std::cout << (v1 << i);
+	}
+	std::cout << "==============================" << std::endl;
+	for (int i = 0; i <= v1.Lenght(); ++i) {
+		std::cout << (v1 >> i);
 	}
 	BoolVector v2(v1);
 	v2.Set0(1, 1);
 	v1.Set1(3, 1);
 	v0.Swap(v2);
+	std::cout << (v1 << 9);
 	std::cout << "==============================" << std::endl;
 	for (int i = 0; i <= v0.Lenght(); ++i) {
 		std::cout << (v0<<i);
