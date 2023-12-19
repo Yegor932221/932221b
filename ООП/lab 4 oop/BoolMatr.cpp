@@ -127,15 +127,18 @@ int BoolMatr::WeightRow(int j)const {
 }
 
 void BoolMatr::InvertElement(int row, int col) {
+	assert(col > 0 && row > 0 && col < m_columns && row < m_rows);
 	m_matrix[row].InvertElement(col);
 }
 
 void BoolMatr::InvertElementsInRange(int row, int col, int count) {
+	assert(col >= 0 && col < m_columns && row >= 0 && row < m_rows && (count + col) < m_columns);
 	for(int i=0;i<count;i++)
 		m_matrix[row].InvertElement(col+i);
 }
 
 void BoolMatr::Set(int row, int col, bool value) {
+	assert(col > 0 && row > 0 && col<m_columns && row<m_rows);
 	m_matrix[row][col] = value;
 }
 
