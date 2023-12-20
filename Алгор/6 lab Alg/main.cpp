@@ -103,17 +103,19 @@ void Breakdown(std::vector<int>& arr, int l, int r, int k)
 void BitSorting(std::vector<int>& arr)
 {
 	int max = Max(arr);
-	int k = 0;
-	while (max) {
-		max >>= 1;
-		k++;
+	int k = 31;
+	int mask = 1<<30;
+
+	while ((max&mask)==0) {
+		mask >>= 1;
+		k--;
 	}
 	int i = 0;
 	int j = arr.size() - 1;
 	while (i <= j)
 	{
-		while (arr[i] < 0) i++;
-		while (arr[j] >= 0) j--;
+		while (arr[i] < 0 && i<arr.size()-1) i++;
+		while (arr[j] >= 0 && j>=0) j--;
 		if (i <= j) {
 			std::swap(arr[i], arr[j]);
 			i++;
@@ -127,7 +129,7 @@ void BitSorting(std::vector<int>& arr)
 int Max(std::vector<int> arr)
 {
 	int max = arr[0];
-	for (int i = 1; i < arr.size() - 1; i++) {
+	for (int i = 1; i < arr.size(); i++) {
 		if (arr[i] > max) max = arr[i];
 	}
 	return max;
