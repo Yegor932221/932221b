@@ -53,6 +53,23 @@ BoolVector::BoolVector(const BoolVector& other)
 	}
 }
 
+BoolVector::BoolVector(std::vector<bool>& vec)
+{
+	m_length = vec.size();
+	m_cellCount = m_length / 8 + bool(m_length % 8);
+	m_insignificantRankCount = (m_cellCount * m_cellSize) - m_length;
+	m_cells = new UC[m_cellCount];
+	for (int i = 0; i < vec.size(); ++i)
+	{
+		if (vec[i] == true)
+			Set1(i / 8, i % 8);
+		else
+			Set0(i / 8, i % 8);
+	}
+	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] >> m_insignificantRankCount;
+	m_cells[m_cellCount - 1] = m_cells[m_cellCount - 1] << m_insignificantRankCount;
+}
+
 void BoolVector::Set1(const int cell, const int pos_cell)
 {
 	assert(cell >= 0 || cell < m_cellCount || pos_cell < m_cellSize);

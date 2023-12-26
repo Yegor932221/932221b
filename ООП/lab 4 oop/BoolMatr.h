@@ -1,5 +1,7 @@
 #pragma once
 #include<iostream>
+#include"stdio.h"
+#include <vector>
 #include"C:\Users\≈„Ó\932221b\ŒŒœ\3 lab\BoolVector.h"
 
 class BoolMatr
@@ -10,6 +12,8 @@ public:
 	BoolMatr(int colums, int rows, bool value);
 
 	BoolMatr(char** matrix, int rows);
+
+	BoolMatr(std::vector<std::vector<bool>>& vec);
 
 	~BoolMatr();
 
@@ -31,7 +35,7 @@ public:
 
 	int Weight()const;
 
-	BoolVector Matr—onjunction() const;
+	BoolVector MatrConjunction() const;
 
 	BoolVector MatrDisjunction()const;
 

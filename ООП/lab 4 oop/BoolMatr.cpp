@@ -3,6 +3,7 @@
 #include<string>
 #include<stdio.h>
 #include<assert.h>
+#include <vector>
 #include "BoolMatr.h"
 
 BoolMatr::BoolMatr()
@@ -37,6 +38,17 @@ BoolMatr::BoolMatr(char** matrix, int rows)
 	for (int i = 0; i < m_rows; i++)
 	{
 		m_matrix[i] = BoolVector(matrix[i]);
+	}
+}
+
+BoolMatr::BoolMatr(std::vector<std::vector<bool>>& vec)
+{
+	m_rows = vec.size();
+	m_columns = vec.size();
+	m_matrix = new BoolVector[m_rows];
+	for (int i = 0; i < vec.size(); ++i)
+	{
+		m_matrix[i] = BoolVector(vec[i]);
 	}
 }
 
@@ -104,7 +116,7 @@ int BoolMatr::Weight()const {
 	return weight;
 }
 
-BoolVector BoolMatr::MatrÑonjunction()const {
+BoolVector BoolMatr::MatrConjunction()const {
 	BoolVector answer(m_matrix[0]);
 	for (int i = 1; i < m_rows; i++)
 	{

@@ -16,7 +16,7 @@ int main() {
 
 	matr3.MatrDisjunction();
 
-	second_matr.Matr—onjunction();
+	second_matr.MatrConjunction();
 	matr3 = second_matr;
 	return 0;
 }
