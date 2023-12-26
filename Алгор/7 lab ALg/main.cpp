@@ -24,16 +24,15 @@ int main() {
 	std::vector<int> arr;
 	BoolVector vector1(matr.GetCountColumns(), false);
 	BoolVector vector2(matr.GetCountColumns(), false);
-	/*std::cout << "Input Matrix" << std::endl;*/
-	/*std::cin >> matr;*/
 	for (; vector1.Weight()!= matr.GetCountColumns();) {
 		vector2 = ~matr.MatrDisjunction();
 		vector1 =vector1 | vector2;
+
 		if (vector2.Weight() == 0) {
 			std::cout << "Circly Graph";
-				return 0;
+			return 0;
 		}
-		uint8_t mask = 1;
+
 		for (int i = 0; i<vector2.Lenght(); i++) {
 			if (vector2[i] == 1) {
 				matr[i].Set0InRange(0,matr.GetCountColumns());
