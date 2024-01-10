@@ -110,6 +110,49 @@ void List<Type>::Swap(List& other)
 	std::swap(m_length, other.m_length);
 }
 
+template<typename ItemType>typename
+List<ItemType>::Iterator List<ItemType>::Search(const ItemType& value)
+{
+	auto it = Begin();
+	while (it != End())
+	{
+		if (*it == value)
+			return it;
+		++it;
+	}
+	return it;
+}
+
+template<typename ItemType>
+void List<ItemType>::PushFront(const ItemType& value)
+{
+	auto it = Begin();
+	InsertNode(it, value);
+}
+
+template<typename ItemType>
+void List<ItemType>::PushPosition(const int pos, const ItemType& value)
+{
+	assert(pos < m_length);
+	auto it = Begin();
+	for (int i = 1; i < pos; ++i)
+	{
+		++it;
+	}
+	InsertNode(it, value);
+}
+
+template<typename ItemType>
+void List<ItemType>::PushAfterKey(const ItemType& key, const ItemType& value)
+{
+	auto it = Search(key);
+	it++;
+	if (it != End())
+	{
+		InsertNode(it, value);
+	}
+}
+
 template <typename ItemType>
 void List<ItemType>::InsertNode(Iterator& it, const ItemType& value) {
 	Node* q = new Node;

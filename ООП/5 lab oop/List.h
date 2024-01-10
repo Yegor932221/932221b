@@ -31,6 +31,10 @@ public:
 	void PopBack();
 	int Size()const;
 	void Swap(List& other);
+	Iterator Search(const ItemType& value);
+	void PushFront(const ItemType& value);
+	void PushPosition(const int pos, const ItemType& value);
+	void PushAfterKey(const ItemType& key, const ItemType& value);
 
 private:
 	void InsertNode(Iterator& it, const ItemType& value);
