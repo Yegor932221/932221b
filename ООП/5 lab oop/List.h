@@ -30,6 +30,7 @@ public:
 	bool Empty()const;
 	void PopBack();
 	int Size()const;
+	void Swap(List& other);
 
 private:
 	void InsertNode(Iterator& it, const ItemType& value);

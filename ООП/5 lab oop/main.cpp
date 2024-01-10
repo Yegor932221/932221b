@@ -3,5 +3,5 @@
 #include<list>
 
 int main() {
-	
+	List<int> first(15, 100);
 }

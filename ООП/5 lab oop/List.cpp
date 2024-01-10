@@ -9,8 +9,8 @@
 template <typename ItemType>
 List<ItemType>::List(const int length,const ItemType& value) {
 	MakeEmptyList();
-	for (int i = 0; i < length; i++)
-		InsertNode(&this, &value);
+	for (int i = 0; i < length; ++i)
+		PushBack(value);
 }
 
 template <typename ItemType>
@@ -100,6 +100,14 @@ void List<Type>::PopBack()
 template<typename Type>
 int List<Type>::Size()const {
 	return m_length;
+}
+
+template<typename Type>
+void List<Type>::Swap(List& other)
+{
+	std::swap(m_head, other.m_head);
+	std::swap(m_tail, other.m_tail);
+	std::swap(m_length, other.m_length);
 }
 
 template <typename ItemType>
