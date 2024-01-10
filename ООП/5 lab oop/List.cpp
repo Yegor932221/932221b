@@ -192,6 +192,36 @@ void List<ItemType>::PopAfterKey(const ItemType& key)
 	}
 }
 
+template<typename ItemType>
+ItemType List<ItemType>::Min()const
+{
+	assert(m_length > 0);
+	ItemType min = m_head->m_next->m_value;
+	Node* tmp_it = m_head->m_next;
+	while (tmp_it != m_tail)
+	{
+		if (tmp_it->m_value < min)
+			min = tmp_it->m_value;
+		tmp_it = tmp_it->m_next;
+	}
+	return min;
+}
+
+template<typename ItemType>
+ItemType List<ItemType>::Max()const
+{
+	assert(m_length > 0);
+	ItemType max = m_head->m_next->m_value;
+	Node* tmp_it = m_head->m_next;
+	while (tmp_it != m_tail)
+	{
+		if (tmp_it->m_value > max)
+			max = tmp_it->m_value;
+		tmp_it = tmp_it->m_next;
+	}
+	return max;
+}
+
 template <typename ItemType>
 void List<ItemType>::InsertNode(Iterator& it, const ItemType& value) {
 	Node* q = new Node;

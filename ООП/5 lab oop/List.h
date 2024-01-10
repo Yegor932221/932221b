@@ -39,6 +39,8 @@ public:
 	void PopFront();
 	void PopPosition(const int pos);
 	void PopAfterKey(const ItemType& key);
+	ItemType Min()const;
+	ItemType Max()const;
 private:
 	void InsertNode(Iterator& it, const ItemType& value);
 	void MakeEmptyList();
