@@ -17,6 +17,14 @@ public:
 	class Node;
 	List(const int length=0,const ItemType& value=ItemType());
 	List(const Array<ItemType>& array);
+	List(const List& other);
+
+	void PushBack(const ItemType& value);
+	Iterator End();
+	Iterator Begin();
+	ConstIterator End() const;
+	ConstIterator Begin() const;
+
 private:
 	void InsertNode(Iterator& it, const ItemType& value);
 	void MakeEmptyList();
