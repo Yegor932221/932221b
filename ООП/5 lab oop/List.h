@@ -41,6 +41,8 @@ public:
 	void PopAfterKey(const ItemType& key);
 	ItemType Min()const;
 	ItemType Max()const;
+	void Sorting();
+	const ItemType& operator[](const int index)const;
 private:
 	void InsertNode(Iterator& it, const ItemType& value);
 	void MakeEmptyList();
@@ -49,6 +51,12 @@ private:
 	Node* m_tail=nullptr;
 	UI m_length=0;
 };
+
+
+template<typename ItemType>
+std::ostream& operator<<(std::ostream& stream, const List<ItemType>& list);
+template<typename ItemType>
+std::istream& operator>>(std::istream& stream, List<ItemType>& list);
 
 
 template <typename ItemType>

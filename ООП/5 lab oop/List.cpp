@@ -222,6 +222,47 @@ ItemType List<ItemType>::Max()const
 	return max;
 }
 
+template<typename ItemType>
+void List<ItemType>::Sorting()
+{
+	for (auto it = Begin(); it != End(); ++it)
+		for (auto jt = Begin(); jt != End(); ++jt)
+			if (*it < *jt)
+				std::swap(it.m_node->m_value, jt.m_node->m_value);
+}
+
+template<typename ItemType>
+std::ostream& operator<<(std::ostream& stream, const List<ItemType>& list)
+{
+	for (int i = 0; i < list.Size(); ++i)
+	{
+		stream << list[i] << "<=>";
+	}
+	return stream;
+}
+
+template<typename ItemType>
+std::istream& operator>>(std::istream& stream, List<ItemType>& list)
+{
+	for (int i = 0; i < list.Size(); ++i)
+	{
+		stream >> list[i];
+	}
+	return stream;
+}
+
+template<typename Type>
+const Type& List<Type>::operator[](const int index)const
+{
+	assert(index < m_length);
+	Node* tmp_it = m_head->m_next;
+	for (int i = 0; i < index; ++i)
+	{
+		tmp_it = tmp_it->m_next;
+	}
+	return tmp_it->m_value;
+}
+
 template <typename ItemType>
 void List<ItemType>::InsertNode(Iterator& it, const ItemType& value) {
 	Node* q = new Node;
