@@ -18,12 +18,18 @@ public:
 	List(const int length=0,const ItemType& value=ItemType());
 	List(const Array<ItemType>& array);
 	List(const List& other);
+	~List();
+
 
 	void PushBack(const ItemType& value);
 	Iterator End();
 	Iterator Begin();
 	ConstIterator End() const;
 	ConstIterator Begin() const;
+	void Clear();
+	bool Empty()const;
+	void PopBack();
+	int Size()const;
 
 private:
 	void InsertNode(Iterator& it, const ItemType& value);

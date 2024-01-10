@@ -33,6 +33,15 @@ List<ItemType>::List(const List& other) {
 	m_length = other.m_countNode;
 }
 
+template<typename ItemType>
+List<ItemType>::~List()
+{
+	Clear();
+	delete m_tail;
+	delete m_head;
+}
+
+
 template <typename ItemType>
 void List<ItemType>::PushBack(const ItemType& value) {
 	auto it = End();
@@ -57,6 +66,40 @@ List<ItemType>::ConstIterator List<ItemType>::End() const {
 template <typename ItemType>typename
 List<ItemType>::ConstIterator List<ItemType>::Begin() const {
 	return ConstIterator(this, m_head->m_next);
+}
+
+template<typename ItemType>
+void List<ItemType>::Clear()
+{
+	while (!Empty())
+	{
+		PopBack();
+	}
+}
+
+template<typename Type>
+bool List<Type>::Empty()const
+{
+	if (m_head->m_next == m_tail)
+		return true;
+	else
+		return false;
+}
+
+template<typename Type>
+void List<Type>::PopBack()
+{
+	if (!Empty())
+	{
+		auto it = End();
+		--it;
+		DeleteNode(it);
+	}
+}
+
+template<typename Type>
+int List<Type>::Size()const {
+	return m_length;
 }
 
 template <typename ItemType>
