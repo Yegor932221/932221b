@@ -26,6 +26,7 @@ public:
 	Iterator Begin();
 	ConstIterator End() const;
 	ConstIterator Begin() const;
+	void DeleteNode(Iterator& it);
 	void Clear();
 	bool Empty()const;
 	void PopBack();
@@ -35,7 +36,9 @@ public:
 	void PushFront(const ItemType& value);
 	void PushPosition(const int pos, const ItemType& value);
 	void PushAfterKey(const ItemType& key, const ItemType& value);
-
+	void PopFront();
+	void PopPosition(const int pos);
+	void PopAfterKey(const ItemType& key);
 private:
 	void InsertNode(Iterator& it, const ItemType& value);
 	void MakeEmptyList();

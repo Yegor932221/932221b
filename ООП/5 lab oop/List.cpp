@@ -69,6 +69,15 @@ List<ItemType>::ConstIterator List<ItemType>::Begin() const {
 }
 
 template<typename ItemType>
+void List<ItemType>::DeleteNode(Iterator& it)
+{
+	it.m_node->m_next->m_prev = it.m_node->m_prev;
+	it.m_node->m_prev->m_next = it.m_node->m_next;
+	delete it.m_node;
+	--m_length;
+}
+
+template<typename ItemType>
 void List<ItemType>::Clear()
 {
 	while (!Empty())
@@ -150,6 +159,36 @@ void List<ItemType>::PushAfterKey(const ItemType& key, const ItemType& value)
 	if (it != End())
 	{
 		InsertNode(it, value);
+	}
+}
+
+template<typename ItemType>
+void List<ItemType>::PopFront()
+{
+	auto it = Begin();
+	DeleteNode(it);
+}
+
+template<typename ItemType>
+void List<ItemType>::PopPosition(const int pos)
+{
+	assert(pos < m_length);
+	auto it = Begin();
+	for (int i = 1; i < pos; ++i)
+	{
+		++it;
+	}
+	DeleteNode(it);
+}
+
+template<typename ItemType>
+void List<ItemType>::PopAfterKey(const ItemType& key)
+{
+	auto it = Search(key);
+	it++;
+	if (it != End())
+	{
+		DeleteNode(it);
 	}
 }
 
