@@ -263,6 +263,62 @@ const Type& List<Type>::operator[](const int index)const
 	return tmp_it->m_value;
 }
 
+template<typename ItemType>
+List<ItemType>& List<ItemType>::operator=(const List& other)
+{
+	if (m_head == other.m_head)
+		return *this;
+	Clear();
+	for (const ItemType& value : other)
+	{
+		PushBack(value);
+	}
+	return *this;
+}
+
+template<typename ItemType>
+bool List<ItemType>::operator==(const List& other)const
+{
+	if (m_length == other.m_length)
+		return false;
+	else if (m_head == other.m_head)
+		return true;
+	else
+	{
+		for (auto it = Begin(), jt = other.Begin(); it != End() && jt != other.End(); ++it, ++jt)
+		{
+			if (*it != *jt)
+				return false;
+		}
+		return true;
+	}
+}
+
+template<typename Type>
+bool List<Type>::operator!=(const List& other)const
+{
+	return !(*this == other);
+}
+
+template<typename ItemType>
+List<ItemType>& List<ItemType>::operator+=(const List& other)const {
+
+	for (auto it = other.Begin(); it != other.End(); ++it)
+	{
+		PushBack(*it);
+	}
+	return *this;
+
+}
+
+template<typename ItemType>
+List<ItemType> List<ItemType>::operator+(const List& other)const
+{
+	List res(*this);
+	res += other;
+	return res;
+}
+
 template <typename ItemType>
 void List<ItemType>::InsertNode(Iterator& it, const ItemType& value) {
 	Node* q = new Node;

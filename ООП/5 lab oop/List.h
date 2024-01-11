@@ -7,7 +7,6 @@
 template <typename ItemType>
 class List
 {
-	using UI = unsigned int;
 public:
 	template<typename IT, typename LT>
 	class TmpIterator;
@@ -43,13 +42,18 @@ public:
 	ItemType Max()const;
 	void Sorting();
 	const ItemType& operator[](const int index)const;
+	List<ItemType>& operator=(const List& other);
+	bool operator==(const List& other)const;
+	bool operator!=(const List& other)const;
+	List<ItemType>& operator+=(const List& other)const;
+	List<ItemType> operator+(const List& other)const;
 private:
 	void InsertNode(Iterator& it, const ItemType& value);
 	void MakeEmptyList();
 
 	Node* m_head=nullptr;
 	Node* m_tail=nullptr;
-	UI m_length=0;
+	int m_length=0;
 };
 
 

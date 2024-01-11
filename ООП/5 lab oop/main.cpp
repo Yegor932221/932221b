@@ -4,5 +4,7 @@
 
 int main() {
 	List<int> first(15, 100);
-	first.PopPosition(4);
+	List<int> second(first);
+	second.PopBack();
+	
 }
