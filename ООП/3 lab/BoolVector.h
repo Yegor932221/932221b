@@ -17,7 +17,7 @@ private:
 
 public:
 	BoolVector();
-	BoolVector(UI length, const bool value);
+	BoolVector(UI length, const bool value=false);
 	~BoolVector();
 	int Lenght();
 	BoolVector(std::vector<bool>& vec);
@@ -30,8 +30,8 @@ public:
 	BoolVector operator>>(const int count)const;
 	void Invert();
 	void InvertElement(int index);	
-	void Set1InRange(int index, const int range);
-	void Set0InRange(int index, const int range);
+	void Set1InRange(int index, const int rangó=1);
+	void Set0InRange(int index, const int range=1);
 	void Set1All();
 	void Set0All();
 	int Weight();

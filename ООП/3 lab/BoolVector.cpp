@@ -11,7 +11,7 @@ BoolVector::BoolVector()
 	m_cells[0] = false;
 }
 
-BoolVector::BoolVector(UI length, const bool value)
+BoolVector::BoolVector(UI length, const bool value=false)
 {
 	assert(length >= 0);
 	m_length = length;
@@ -204,7 +204,7 @@ void BoolVector::InvertElement(int index) {
 	m_cells[(index / m_cellSize) + 1] = m_cells[(index / m_cellSize) + 1] ^ mask;
 }
 
-void BoolVector::Set1InRange(int index, const int range)
+void BoolVector::Set1InRange(int index, const int range=1)
 {
 	assert(index >= 0 || (index < m_cellCount && range < m_length));
 
@@ -214,7 +214,7 @@ void BoolVector::Set1InRange(int index, const int range)
 	}
 }
 
-void BoolVector::Set0InRange(int index, const int range)
+void BoolVector::Set0InRange(int index, const int range=1)
 {
 	assert(index >= 0 || (index < m_cellCount && range <= m_length));
 
