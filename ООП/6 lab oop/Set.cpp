@@ -123,3 +123,75 @@ bool Set::operator!=( Set& other)
 {
 	return !(*this==other);
 }
+
+Set& Set::operator|=(const Set& other)
+{
+	BoolVector::operator|=(other);
+	return *this;
+}
+
+Set& Set::operator|(const Set& other)
+{
+	Set tmp(*this);
+	tmp |= other;
+	return tmp;
+}
+Set& Set::operator&=(const Set& other)
+{
+	BoolVector::operator&=(other);
+	return *this;
+}
+
+Set& Set::operator&(const Set& other)
+{
+	Set tmp(*this);
+	tmp &= other;
+	return tmp;
+}
+
+Set& Set::operator+=(const char other)
+{
+	*this = *this + other;
+	return *this;
+}
+
+Set& Set::operator+(const char other)
+{
+	if ((int)other >= m_shift || (int)other < m_size)
+	{
+		Set tmp(*this);
+		tmp.Set1InRange((int)other - m_shift);
+		return tmp;
+	}
+	return *this;
+}
+
+Set Set::operator/=(const Set& other)
+{
+	BoolVector::operator&=(~other);
+	return *this;
+}
+
+Set Set::operator/(const Set& other)const
+{
+	Set tmp(*this);
+	tmp /= other;
+	return tmp;
+}
+
+Set Set::operator-(const char value)const
+{
+	if ((int)value >= m_shift || (int)value < m_size)
+	{
+		Set tmp(*this);
+		tmp.Set0InRange((int)value - m_shift);
+		return tmp;
+	}
+	return *this;
+}
+
+Set Set::operator-=(const char value)
+{
+	*this = *this - value;
+	return *this;
+}

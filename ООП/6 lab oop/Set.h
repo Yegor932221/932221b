@@ -18,6 +18,17 @@ public:
 	Set& operator=(const Set& other);
 	bool operator==( Set& other);
 	bool operator!=( Set& other);
+	Set& operator|(const Set& other);
+	Set& operator|=(const Set& other);
+	Set& operator&(const Set& other);
+	Set& operator&=(const Set& other);
+	Set& operator+(const char other);
+	Set& operator+=(const char other);
+	Set operator/(const Set& other)const;
+	Set operator/=(const Set& other);
+	Set operator-(const char value)const;
+	Set operator-=(const char value);
+
 private:
 	static const int m_size = 95;
 	static const int m_shift = 32;
