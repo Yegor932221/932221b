@@ -195,3 +195,8 @@ Set Set::operator-=(const char value)
 	*this = *this - value;
 	return *this;
 }
+
+int Set::Power()const
+{
+	return BoolVector::Weight();
+}

@@ -28,6 +28,7 @@ public:
 	Set operator/=(const Set& other);
 	Set operator-(const char value)const;
 	Set operator-=(const char value);
+	int Power()const;
 
 private:
 	static const int m_size = 95;
