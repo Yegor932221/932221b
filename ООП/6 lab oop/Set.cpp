@@ -53,3 +53,55 @@ std::istream& operator>>(std::istream& stream, Set& set)
 	}
 	return stream;
 }
+
+bool Set::Attend(const char value)const
+{
+
+	if ((int)value >= m_shift || (int)value < m_size)
+		return false;
+	else
+		return (operator[]((int)value - m_shift));
+}
+
+char Set::Max() const
+{
+	char max = '~';
+	if (BoolVector::operator[](m_size - 1))
+	{
+		max = (char)((m_size - 1) + m_shift);
+		return max;
+	}
+	else
+	{
+		for (int i = m_size - 2; i >= 0; --i)
+		{
+			if ((BoolVector::operator[](i)))
+			{
+				max = (char)(i + m_shift);
+				return max;
+			}
+		}
+	}
+	return max;
+
+}
+
+
+char Set::Min() const 
+{
+	char min = '0';
+	if (BoolVector::operator[](0))
+		return min = (char)(m_shift);
+	else
+	{
+		for (int i = 1; i < m_size; ++i)
+		{
+			if ((BoolVector::operator[](i)))
+			{
+				min = (char)(i + m_shift);
+				return min;
+			}
+		}
+	}
+	return min;
+}
