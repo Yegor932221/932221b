@@ -15,6 +15,9 @@ public:
 	bool Attend(const char value)const;
 	char Max() const;
 	char Min() const;
+	Set& operator=(const Set& other);
+	bool operator==( Set& other);
+	bool operator!=( Set& other);
 private:
 	static const int m_size = 95;
 	static const int m_shift = 32;

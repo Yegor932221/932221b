@@ -105,3 +105,21 @@ char Set::Min() const
 	}
 	return min;
 }
+
+Set& Set::operator=(const Set& other)
+{
+	if (this == &other)
+		return *this;
+	BoolVector::operator=(other);
+	return *this;
+}
+
+bool Set::operator==( Set& other)
+{
+	return BoolVector::operator==(other);
+}
+
+bool Set::operator!=( Set& other)
+{
+	return !(*this==other);
+}
