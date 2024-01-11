@@ -127,9 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\3 lab\BoolVector.h" />
     <ClInclude Include="Set.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\3 lab\BoolVector.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Set.cpp" />
   </ItemGroup>

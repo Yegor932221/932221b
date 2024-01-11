@@ -114,12 +114,12 @@ Set& Set::operator=(const Set& other)
 	return *this;
 }
 
-bool Set::operator==( Set& other)
+bool Set::operator==(const Set& other)const
 {
 	return BoolVector::operator==(other);
 }
 
-bool Set::operator!=( Set& other)
+bool Set::operator!=(const Set& other)const
 {
 	return !(*this==other);
 }
@@ -130,7 +130,7 @@ Set& Set::operator|=(const Set& other)
 	return *this;
 }
 
-Set& Set::operator|(const Set& other)
+Set Set::operator|(const Set& other)const
 {
 	Set tmp(*this);
 	tmp |= other;
@@ -142,20 +142,20 @@ Set& Set::operator&=(const Set& other)
 	return *this;
 }
 
-Set& Set::operator&(const Set& other)
+Set Set::operator&(const Set& other) const
 {
 	Set tmp(*this);
 	tmp &= other;
 	return tmp;
 }
 
-Set& Set::operator+=(const char other)
+Set Set::operator+=(const char other)
 {
 	*this = *this + other;
 	return *this;
 }
 
-Set& Set::operator+(const char other)
+Set Set::operator+(const char other) const
 {
 	if ((int)other >= m_shift || (int)other < m_size)
 	{
@@ -198,5 +198,5 @@ Set Set::operator-=(const char value)
 
 int Set::Power()const
 {
-	return BoolVector::Weight();
+	return BoolVector::Weight();	
 }
