@@ -19,7 +19,7 @@ public:
 	BoolVector();
 	BoolVector(UI length, const bool value=false);
 	~BoolVector();
-	int Lenght();
+	int Length()const;
 	BoolVector(std::vector<bool>& vec);
 	BoolVector(const BoolVector& other);
 	void Set1(const int cell, const int pos_cell);
@@ -34,7 +34,7 @@ public:
 	void Set0InRange(int index, const int range=1);
 	void Set1All();
 	void Set0All();
-	int Weight();
+	int Weight() const;
 
 	class BoolRank;
 
@@ -54,6 +54,7 @@ public:
 	BoolVector operator>>=(const int count);
 
 	BoolVector operator ~()const;
+	bool operator==(const BoolVector& other) const;
 
 	BoolVector& operator=(const BoolVector& other);
 	friend	std::ostream& operator <<(std::ostream& stream, const BoolVector& vector);

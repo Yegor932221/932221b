@@ -6,11 +6,11 @@ int main()
 {
 	BoolVector v0;
 	BoolVector v1(76, 1);
-	for (int i = 0; i <= v1.Lenght(); ++i) {
+	for (int i = 0; i <= v1.Length(); ++i) {
 		std::cout << (v1 << i);
 	}
 	std::cout << "==============================" << std::endl;
-	for (int i = 0; i <= v1.Lenght(); ++i) {
+	for (int i = 0; i <= v1.Length(); ++i) {
 		std::cout << (v1 >> i);
 	}
 	BoolVector v2(v1);
@@ -19,7 +19,7 @@ int main()
 	v0.Swap(v2);
 	std::cout << (v1 << 9);
 	std::cout << "==============================" << std::endl;
-	for (int i = 0; i <= v0.Lenght(); ++i) {
+	for (int i = 0; i <= v0.Length(); ++i) {
 		std::cout << (v0<<i);
 	}
 	 v2.Invert();

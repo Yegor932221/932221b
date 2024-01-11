@@ -11,7 +11,7 @@ BoolVector::BoolVector()
 	m_cells[0] = false;
 }
 
-BoolVector::BoolVector(UI length, const bool value=false)
+BoolVector::BoolVector(UI length, const bool value)
 {
 	assert(length >= 0);
 	m_length = length;
@@ -36,7 +36,7 @@ BoolVector:: ~BoolVector()
 	delete[] m_cells;
 }
 
-int BoolVector::Lenght()
+int BoolVector::Length()const
 {
 	return m_length;
 }
@@ -204,7 +204,7 @@ void BoolVector::InvertElement(int index) {
 	m_cells[(index / m_cellSize) + 1] = m_cells[(index / m_cellSize) + 1] ^ mask;
 }
 
-void BoolVector::Set1InRange(int index, const int range=1)
+void BoolVector::Set1InRange(int index, const int range)
 {
 	assert(index >= 0 || (index < m_cellCount && range < m_length));
 
@@ -214,7 +214,7 @@ void BoolVector::Set1InRange(int index, const int range=1)
 	}
 }
 
-void BoolVector::Set0InRange(int index, const int range=1)
+void BoolVector::Set0InRange(int index, const int range)
 {
 	assert(index >= 0 || (index < m_cellCount && range <= m_length));
 
@@ -234,21 +234,21 @@ void BoolVector::Set0All()
 	Set0InRange(0, m_length);
 }
 
-int BoolVector::Weight()
+int BoolVector::Weight() const
 {
-	int weight = 0;
-	for (int j = 0; j < m_cellSize; j++)
+	int count = 0;
+	for (int i = 0; i < m_cellCount; i++)
 	{
-		UC mask = 128;
-		mask >>= j;
-		for (int i = 0; i < m_cellCount; i++)
+		for (int j = 0; j < m_cellSize; j++)
 		{
+			UI mask = 128;
+			mask >>= j;
 			mask &= m_cells[i];
 			if (mask)
-				weight++;
+				count++;
 		}
 	}
-	return weight;
+	return count;
 }
 
 BoolVector::BoolRank::BoolRank(UC* cell, const int mask)
@@ -357,13 +357,13 @@ BoolVector& BoolVector::operator=(const BoolVector& other)
 	return *this;
 }
 std::istream& operator >>(std::istream& stream, BoolVector& vector) {
-	char* str = new char[vector.Lenght()];
-	for (int i = 0; i < vector.Lenght(); i++)
+	char* str = new char[vector.Length()];
+	for (int i = 0; i < vector.Length(); i++)
 	{
 		stream >> str[i];
 
 	}
-	for (int i = 0; i < vector.Lenght(); i++)
+	for (int i = 0; i < vector.Length(); i++)
 	{
 		if (str[i] != '0')
 			vector[i] = 1;
@@ -414,3 +414,15 @@ const BoolVector::BoolRank BoolVector::operator[](const int index)const
 	assert(index>=0);
 	return BoolRank(m_cells + index / m_cellSize, index % m_cellSize);
 }	
+
+bool BoolVector::operator==(const BoolVector& other)const
+{
+	if (Length() != other.Length())
+		return false;
+	for (int i = 0; i < other.Length(); ++i)
+	{
+		if (operator[](i) != other[i])
+			return false;
+	}
+	return true;
+}
